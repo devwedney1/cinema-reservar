@@ -24,19 +24,18 @@ services:
       - cinema
 
   db:
-    image: postgres
-    restart: always
+    image: mariadb:10.5
     volumes:
-      - .docker/postgres/database:/var/lib/postgres
-      - type: tmpfs
-        target: /dev/shm
+      - .docker/mariadb/databases:/var/lib/mysql
+      - .docker/mariadb/sql-files:/sql-files
     environment:
-      POSTGRES_DATABASE: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_ROOT_PASSWORD : ${DB_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    working_dir: /sql-files
     ports:
-      - ${DB_PORT}:${DB_PORT}
+      - ${DB_PORT_SUCUNDARIA}:${DB_PORT}
 
 networks:
   cinema:
