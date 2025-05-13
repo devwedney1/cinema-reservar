@@ -1,0 +1,43 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: .docker/php-fpm/Dockerfile
+    volumes:
+      - ./:/app
+    networks:
+      - cinema
+    depends_on:
+      - db
+
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile
+    volumes:
+      - ./app:/app
+    ports:
+      - "1010:80"
+    depends_on:
+      - php
+    networks:
+      - cinema
+
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - .docker/postgres/database:/var/lib/postgres
+      - type: tmpfs
+        target: /dev/shm
+    environment:
+      POSTGRES_DATABASE: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_ROOT_PASSWORD : ${DB_ROOT_PASSWORD}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+
+networks:
+  cinema:
+    driver: bridge
