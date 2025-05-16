@@ -50,4 +50,46 @@ Class FilmeDAO
 
     }
 
+    /**
+     * @param Filme $filme
+     *
+     * @return array|void
+     */
+    public function create(Filme $filme)
+    {
+        try {
+
+            $this->conexao->beginTransaction();
+
+            $dataFormularioFilme = [
+                'nome' => $filme->getNomeFilme(),
+                'descricao' => $filme->getDescricaoFilme(),
+                'duracao' => $filme->getDuracaoFilme(),
+            ];
+
+            $stmt = $this->conexao->prepare(
+                "INSERT INTO " . self::tableName . "(nome, descricao, duracao) 
+                VALUES (:nome, :descricao, :duracao)"
+            );
+
+            $stmt->bindParam(':nome', $dataFormularioFilme['nome'], PDO::PARAM_STR);
+            $stmt->bindParam(':descricao', $dataFormularioFilme['descricao'], PDO::PARAM_STR);
+            $stmt->bindParam(':duracao', $dataFormularioFilme['duracao'], PDO::PARAM_STR);
+            $stmt->execute();
+
+            if($stmt->rowCount() > 0) {
+                $this->conexao->commit();
+
+                return [
+                    'success' => true,
+                    'message' => 'Filme cadastrado com sucesso!',
+                    'id' => $this->conexao->lastInsertId()
+                ];
+            }
+        } catch (PDOException $e) {
+            $this->conexao->rollBack();
+            throw new PDOException("ERRO ao cadastra um filme" . $e->getMessage());
+        }
+    }
+
 }
