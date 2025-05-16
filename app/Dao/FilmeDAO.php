@@ -92,4 +92,49 @@ Class FilmeDAO
         }
     }
 
+    public function update(Filme $filme)
+    {
+        try {
+            $this->conexao->beginTransaction();
+
+            if($filme->getId() == 0 || $filme->getId() == '' || $filme->getId() == ' ' || !$filme->getId()) {
+                return [
+                    'success' => false,
+                    'message' => 'O id e obrigatorio para atualizar um filme'
+                ];
+            }
+
+            $dataFormularioUpdate = [
+                'id' => $filme->getId(),
+                'nome' => $filme->getNomeFilme(),
+                'descricao' => $filme->getDescricaoFilme(),
+                'duracao' => $filme->getDuracaoFilme()
+            ];
+
+            $stmt = $this->conexao->prepare(
+                "UPDATE " . self::tableName . " SET nome = :nome, descricao = :descricao, duracao = :duracao WHERE id = :id"
+            );
+
+            $stmt->bindParam(':id', $dataFormularioUpdate['id'], PDO::PARAM_INT);
+            $stmt->bindParam(':nome', $dataFormularioUpdate['nome'], PDO::PARAM_STR);
+            $stmt->bindParam(':descricao', $dataFormularioUpdate['descricao'], PDO::PARAM_STR);
+            $stmt->bindParam(':duracao', $dataFormularioUpdate['duracao'], PDO::PARAM_STR);
+
+            $stmt->execute();
+
+            if($stmt->rowCount() > 0) {
+                $this->conexao->commit();
+
+                return [
+                  'success' => true,
+                  'message' => 'Filme atualizado com sucesso!'
+                ];
+            }
+
+        } catch (PDOException $e) {
+            $this->conexao->rollBack();
+            throw new PDOException("ERRO ao atualizar o filme" . $e->getMessage());
+        }
+    }
+
 }
