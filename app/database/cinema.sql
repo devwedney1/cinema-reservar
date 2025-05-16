@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS ingressos
     cadeira_id         INT UNSIGNED,
     forma_pagamento_id INT UNSIGNED,
     preco              DECIMAL(6, 2),
-    status             ENUM ('reservado', 'pago', 'cancelado') DEFAULT 'reservado',
+    status             ENUM ('pago', 'cancelado') DEFAULT 'pago',
     vendido_em         TIMESTAMP                               DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sessao_id) REFERENCES sessoes_filmes (id),
     FOREIGN KEY (cadeira_id) REFERENCES cadeiras (id),
