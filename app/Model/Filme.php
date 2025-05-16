@@ -74,4 +74,12 @@ Class Filme
     public function setDescricaoFilme($descricaoFilme){
         $this->descricaoFilme = $descricaoFilme;
     }
+
+    public function getDuracaoFilme(){
+        return $this->duracaoFilme;
+    }
+
+    public function setDuracaoFilme($duracaoFilme){
+        $this->duracaoFilme = $duracaoFilme;
+    }
 }
