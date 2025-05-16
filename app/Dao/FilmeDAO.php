@@ -92,6 +92,11 @@ Class FilmeDAO
         }
     }
 
+    /**
+     * @param Filme $filme
+     *
+     * @return array|void
+     */
     public function update(Filme $filme)
     {
         try {
@@ -134,6 +139,50 @@ Class FilmeDAO
         } catch (PDOException $e) {
             $this->conexao->rollBack();
             throw new PDOException("ERRO ao atualizar o filme" . $e->getMessage());
+        }
+    }
+
+    /**
+     * @param Filme $filme
+     *
+     * @return array|void
+     */
+    public function delete(Filme $filme)
+    {
+        try {
+            $this->conexao->beginTransaction();
+
+            if($filme->getId() == 0 || $filme->getId() == '' || $filme->getId() == ' ' || !$filme->getId()) {
+                return [
+                    'success' => false,
+                    'message' => 'O id e obrigatorio para delete suave do filme'
+                ];
+            }
+
+            $dataFormularioDelete = [
+                'id' => $filme->getId(),
+            ];
+
+            $stmt = $this->conexao->prepare(
+                'UPDATE ' . self::tableName . ' SET deleted_at = NOW() WHERE id = :id'
+            );
+
+            $stmt->bindParam(':id', $dataFormularioDelete['id'], PDO::PARAM_INT);
+
+            $stmt->execute();
+
+            if($stmt->rowCount() > 0) {
+                $this->conexao->commit();
+
+                return [
+                    'success' => true,
+                    'message' => 'Filme deletado com sucesso!'
+                ];
+            }
+
+        } catch (PDOException $e) {
+            $this->conexao->rollBack();
+            throw new PDOException("ERRO ao deletar o filme" . $e->getMessage());
         }
     }
 
