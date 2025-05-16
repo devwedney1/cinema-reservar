@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS categoria_filmes
     nome_categoria ENUM ('Ação', 'Aventura', 'Comédia', 'Drama', 'Ficção Científica', 'Terror', 'Romance', 'Animação'),
     created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at     TIMESTAMP DEFAULT NULL
+    deleted_at     TIMESTAMP NULL
     );
 
 -- Tabela de filmes
@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS filmes
     categoria_filme_id INT UNSIGNED,
     nome_filme         VARCHAR(100),
     descricao_filme    VARCHAR(500),
-    duracao_filme            TIME,
+    duracao_filme      TIME,
     created_at         TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at         TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at         TIMESTAMP DEFAULT NULL,
+    deleted_at         TIMESTAMP NULL,
     FOREIGN KEY (categoria_filme_id) REFERENCES categoria_filmes (id)
     );
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS salas
     nome       ENUM ('A', 'B', 'C'),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP DEFAULT NULL
+    deleted_at TIMESTAMP NULL
     );
 
 -- Tabela de sessões de filmes
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS sessoes_filmes
     sala_id    INT UNSIGNED,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP DEFAULT NULL,
+    deleted_at TIMESTAMP NULL,
     FOREIGN KEY (filme_id) REFERENCES filmes (id),
     FOREIGN KEY (sala_id) REFERENCES salas (id)
     );
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS horario_sessoes
     tempo_sessoes     TIME,
     created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at        TIMESTAMP DEFAULT NULL,
+    deleted_at        TIMESTAMP NULL,
     FOREIGN KEY (sessoes_filmes_id) REFERENCES sessoes_filmes (id)
     );
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS cadeiras
     numero_cadeira INT,
     created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at     TIMESTAMP DEFAULT NULL,
+    deleted_at     TIMESTAMP NULL,
     FOREIGN KEY (sala_id) REFERENCES salas (id)
     );
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS forma_pagamento
     pagamento  ENUM ('dinheiro', 'cartao debito', 'cartao credito', 'bitcoin'),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP DEFAULT NULL
+    deleted_at TIMESTAMP NULL
     );
 
 -- Tabela de ingressos (vendas)
