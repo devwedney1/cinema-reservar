@@ -186,4 +186,38 @@ Class FilmeDAO
         }
     }
 
+    /**
+     * @param int $idFilme
+     *
+     * @return array|void
+     */
+    public function destroy(int $idFilme)
+    {
+        try {
+            $this->conexao->beginTransaction();
+
+            $stmt = $this->conexao->prepare(
+                'DELETE FROM ' . self::tableName . ' WHERE id = :id'
+            );
+
+            $stmt->bindParam(':id', $idFilme, PDO::PARAM_INT);
+
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $this->conexao->commit();
+
+                return [
+                    'success' => true,
+                    'message' => 'Filme deletado com sucesso!'
+                ];
+            }
+
+        } catch (PDOException $e) {
+            $this->conexao->rollBack();
+            throw new PDOException("ERRO ao deleta para sempre r o filme" . $e->getMessage());
+        }
+    }
+
+
 }
