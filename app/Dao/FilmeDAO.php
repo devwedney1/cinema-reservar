@@ -2,13 +2,14 @@
 
 require_once '../Connection/DataConnection.php';
 require_once '../Model/Filme.php';
-Class FilmeDAO
+
+class FilmeDAO
 {
     private $conexao;
-
     private const tableName = 'filmes';
 
-    public function __construct(){
+    public function __construct ()
+    {
         $this->conexao = DataConnection::getConnection();
     }
 
@@ -17,7 +18,7 @@ Class FilmeDAO
      *
      * @return mixed
      */
-    public function first(int $idfilme)
+    public function first (int $idfilme)
     {
         try {
 
@@ -33,11 +34,10 @@ Class FilmeDAO
         }
     }
 
-
     /**
      * @return array
      */
-    public function get()
+    public function get ()
     {
         try {
             $stmt = $this->conexao->query("SELECT * FROM" . self::tableName);
@@ -47,7 +47,6 @@ Class FilmeDAO
         } catch (PDOException $e) {
             throw new PDOException("ERRO ao buscar um filme" . $e->getMessage());
         }
-
     }
 
     /**
@@ -55,7 +54,7 @@ Class FilmeDAO
      *
      * @return array|void
      */
-    public function create(Filme $filme)
+    public function create (Filme $filme)
     {
         try {
 
@@ -77,13 +76,13 @@ Class FilmeDAO
             $stmt->bindParam(':duracao', $dataFormularioFilme['duracao'], PDO::PARAM_STR);
             $stmt->execute();
 
-            if($stmt->rowCount() > 0) {
+            if ($stmt->rowCount() > 0) {
                 $this->conexao->commit();
 
                 return [
                     'success' => true,
                     'message' => 'Filme cadastrado com sucesso!',
-                    'id' => $this->conexao->lastInsertId()
+                    'id' => $this->conexao->lastInsertId(),
                 ];
             }
         } catch (PDOException $e) {
@@ -97,15 +96,15 @@ Class FilmeDAO
      *
      * @return array|void
      */
-    public function update(Filme $filme)
+    public function update (Filme $filme)
     {
         try {
             $this->conexao->beginTransaction();
 
-            if($filme->getId() == 0 || $filme->getId() == '' || $filme->getId() == ' ' || !$filme->getId()) {
+            if ($filme->getId() == 0 || $filme->getId() == '' || $filme->getId() == ' ' || !$filme->getId()) {
                 return [
                     'success' => false,
-                    'message' => 'O id e obrigatorio para atualizar um filme'
+                    'message' => 'O id e obrigatorio para atualizar um filme',
                 ];
             }
 
@@ -113,7 +112,7 @@ Class FilmeDAO
                 'id' => $filme->getId(),
                 'nome' => $filme->getNomeFilme(),
                 'descricao' => $filme->getDescricaoFilme(),
-                'duracao' => $filme->getDuracaoFilme()
+                'duracao' => $filme->getDuracaoFilme(),
             ];
 
             $stmt = $this->conexao->prepare(
@@ -127,12 +126,12 @@ Class FilmeDAO
 
             $stmt->execute();
 
-            if($stmt->rowCount() > 0) {
+            if ($stmt->rowCount() > 0) {
                 $this->conexao->commit();
 
                 return [
-                  'success' => true,
-                  'message' => 'Filme atualizado com sucesso!'
+                    'success' => true,
+                    'message' => 'Filme atualizado com sucesso!',
                 ];
             }
 
@@ -147,15 +146,15 @@ Class FilmeDAO
      *
      * @return array|void
      */
-    public function delete(Filme $filme)
+    public function delete (Filme $filme)
     {
         try {
             $this->conexao->beginTransaction();
 
-            if($filme->getId() == 0 || $filme->getId() == '' || $filme->getId() == ' ' || !$filme->getId()) {
+            if ($filme->getId() == 0 || $filme->getId() == '' || $filme->getId() == ' ' || !$filme->getId()) {
                 return [
                     'success' => false,
-                    'message' => 'O id e obrigatorio para delete suave do filme'
+                    'message' => 'O id e obrigatorio para delete suave do filme',
                 ];
             }
 
@@ -171,12 +170,12 @@ Class FilmeDAO
 
             $stmt->execute();
 
-            if($stmt->rowCount() > 0) {
+            if ($stmt->rowCount() > 0) {
                 $this->conexao->commit();
 
                 return [
                     'success' => true,
-                    'message' => 'Filme deletado com sucesso!'
+                    'message' => 'Filme deletado com sucesso!',
                 ];
             }
 
@@ -191,7 +190,7 @@ Class FilmeDAO
      *
      * @return array|void
      */
-    public function destroy(int $idFilme)
+    public function destroy (int $idFilme)
     {
         try {
             $this->conexao->beginTransaction();
@@ -209,7 +208,7 @@ Class FilmeDAO
 
                 return [
                     'success' => true,
-                    'message' => 'Filme deletado com sucesso!'
+                    'message' => 'Filme deletado com sucesso!',
                 ];
             }
 
@@ -218,6 +217,4 @@ Class FilmeDAO
             throw new PDOException("ERRO ao deleta para sempre r o filme" . $e->getMessage());
         }
     }
-
-
 }
