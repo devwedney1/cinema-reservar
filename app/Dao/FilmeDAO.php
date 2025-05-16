@@ -12,6 +12,11 @@ Class FilmeDAO
         $this->conexao = DataConnection::getConnection();
     }
 
+    /**
+     * @param int $idfilme
+     *
+     * @return mixed
+     */
     public function first(int $idfilme)
     {
         try {
@@ -22,11 +27,27 @@ Class FilmeDAO
             $stmt->bindParam(':idfilme', $idfilme, PDO::PARAM_INT);
             $stmt->execute();
 
-            return $stmt->fetch(PDO::FETCH_OBJ);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new PDOException("ERRO ao buscar um filme" . $e->getMessage());
         }
     }
 
+
+    /**
+     * @return array
+     */
+    public function get()
+    {
+        try {
+            $stmt = $this->conexao->query("SELECT * FROM" . self::tableName);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new PDOException("ERRO ao buscar um filme" . $e->getMessage());
+        }
+
+    }
 
 }
