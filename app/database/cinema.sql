@@ -15,9 +15,6 @@ CREATE TABLE IF NOT EXISTS categoria_filmes
     deleted_at     TIMESTAMP NULL
 );
 
--- Populado o banco de dados
-INSERT INTO categoria_filmes(nome_categoria) VALUES ('Ação'), ('Aventura'), ('Comédia'), ('Drama'), ('Ficção Científica'), ('Terror'), ('Romance'), ('Animação');
-
 -- Tabela de filmes
 CREATE TABLE IF NOT EXISTS filmes
 (
@@ -42,9 +39,6 @@ CREATE TABLE IF NOT EXISTS salas
     deleted_at TIMESTAMP NULL
 );
 
--- Populado o banco de dados
-INSERT INTO salas (nome_sala) VALUES ('A'), ('B'), ('C');
-
 -- Tabela de sessões de filmes
 CREATE TABLE IF NOT EXISTS sessoes_filmes
 (
@@ -56,7 +50,7 @@ CREATE TABLE IF NOT EXISTS sessoes_filmes
     deleted_at TIMESTAMP NULL,
     FOREIGN KEY (filme_id) REFERENCES filmes (id),
     FOREIGN KEY (sala_id) REFERENCES salas (id)
-    );
+);
 
 -- Tabela de horários das sessões
 CREATE TABLE IF NOT EXISTS horario_sessoes
@@ -92,9 +86,6 @@ CREATE TABLE IF NOT EXISTS forma_pagamento
     deleted_at TIMESTAMP NULL
 );
 
--- Populado o banco de dados
-INSERT INTO forma_pagamento (pagamento) VALUES ('dinheiro'), ('cartao debito'), ('cartao credito'), ('bitcoin');
-
 -- Tabela de ingressos (vendas)
 CREATE TABLE IF NOT EXISTS ingressos
 (
@@ -110,5 +101,37 @@ CREATE TABLE IF NOT EXISTS ingressos
     FOREIGN KEY (forma_pagamento_id) REFERENCES forma_pagamento (id)
 );
 
--- Populado o banco de dados
-INSERT INTO ingressos (status) VALUES  ('pago'), ('cancelado');
+-- Inserindo categorias de filmes
+INSERT INTO categoria_filmes (nome_categoria)
+VALUES ('Ação'),
+       ('Comédia');
+
+-- Inserindo filmes (usando os IDs das categorias 1 e 2)
+INSERT INTO filmes (categoria_filme_id, nome_filme, descricao_filme, duracao_filme)
+VALUES (1, 'Missão Impossível', 'Filme de ação com espionagem.', '02:10:00'),
+       (2, 'O Máskara', 'Comédia com Jim Carrey.', '01:45:00');
+
+-- Inserindo salas
+INSERT INTO salas (nome_sala)
+VALUES ('A'),
+       ('B');
+
+-- Inserindo sessões de filmes (filmes 1 e 2, salas 1 e 2)
+INSERT INTO sessoes_filmes (filme_id, sala_id)
+VALUES (1, 1),
+       (2, 2);
+
+-- Inserindo horários das sessões (para sessões 1 e 2)
+INSERT INTO horario_sessoes (sessoes_filmes_id, tempo_sessoes)
+VALUES (1, '18:30:00'),
+       (2, '20:00:00');
+
+-- Inserindo cadeiras (sala 1 e 2)
+INSERT INTO cadeiras (sala_id, numero_cadeira)
+VALUES (1, 1),
+       (2, 2);
+
+-- Inserindo formas de pagamento
+INSERT INTO forma_pagamento (pagamento)
+VALUES ('dinheiro'),
+       ('cartao credito');
