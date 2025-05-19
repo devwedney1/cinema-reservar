@@ -7,6 +7,10 @@ Class Filme
      */
     private int $id;
     /**
+     * @var Categoria_filme
+     */
+    private Categoria_filme $categoria_filme_id;
+    /**
      * @var string
      */
     private string $nomeFilme;
@@ -21,7 +25,9 @@ Class Filme
      * @param $descricaoFilme
      * @param $duracaoFilme
      */
-    public function __construct($nomeFilme, $descricaoFilme, $duracaoFilme){
+    public function __construct($id, $categoria_filme_id, $nomeFilme, $descricaoFilme, $duracaoFilme){
+        $this->id = $id;
+        $this->categoria_filme_id = $categoria_filme_id;
         $this->nomeFilme = $nomeFilme;
         $this->descricaoFilme = $descricaoFilme;
         $this->duracaoFilme = $duracaoFilme;
@@ -41,6 +47,19 @@ Class Filme
      */
     public function setId($id){
         $this->id = $id;
+    }
+
+       /**
+     * @return Categoria_filme
+     */
+    public function getCategoria_filme_id(){
+        return $this->categoria_filme_id;
+    }
+       /**
+     * @return Categoria_filme
+     */
+    public function setCategoria_filme_id(Categoria_filme $categoria_filme_id){
+        $this->categoria_filme_id = $categoria_filme_id;
     }
 
     /**

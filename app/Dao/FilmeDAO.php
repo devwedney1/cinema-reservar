@@ -61,19 +61,19 @@ class FilmeDAO
             $this->conexao->beginTransaction();
 
             $dataFormularioFilme = [
-                'nome' => $filme->getNomeFilme(),
-                'descricao' => $filme->getDescricaoFilme(),
-                'duracao' => $filme->getDuracaoFilme(),
+                'nome_filme' => $filme->getNomeFilme(),
+                'descricao_filme' => $filme->getDescricaoFilme(),
+                'duracao_filme' => $filme->getDuracaoFilme(),
             ];
 
             $stmt = $this->conexao->prepare(
-                "INSERT INTO " . self::tableName . "(nome, descricao, duracao) 
-                VALUES (:nome, :descricao, :duracao)"
+                "INSERT INTO " . self::tableName . "(nome_filme, descricao_filme, duracao_filme) 
+                VALUES (:nome_filme, :descricao_filme, :duracao_filme)"
             );
 
-            $stmt->bindParam(':nome', $dataFormularioFilme['nome'], PDO::PARAM_STR);
-            $stmt->bindParam(':descricao', $dataFormularioFilme['descricao'], PDO::PARAM_STR);
-            $stmt->bindParam(':duracao', $dataFormularioFilme['duracao'], PDO::PARAM_STR);
+            $stmt->bindParam(':nome_filme', $dataFormularioFilme['nome_filme'], PDO::PARAM_STR);
+            $stmt->bindParam(':descricao_filme', $dataFormularioFilme['descricao_filme'], PDO::PARAM_STR);
+            $stmt->bindParam(':duracao_filme', $dataFormularioFilme['duracao_filme'], PDO::PARAM_STR);
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {
@@ -110,19 +110,19 @@ class FilmeDAO
 
             $dataFormularioUpdate = [
                 'id' => $filme->getId(),
-                'nome' => $filme->getNomeFilme(),
-                'descricao' => $filme->getDescricaoFilme(),
-                'duracao' => $filme->getDuracaoFilme(),
+                'nome_filme' => $filme->getNomeFilme(),
+                'descricao_filme' => $filme->getDescricaoFilme(),
+                'duracao_filme' => $filme->getDuracaoFilme(),
             ];
 
             $stmt = $this->conexao->prepare(
-                "UPDATE " . self::tableName . " SET nome = :nome, descricao = :descricao, duracao = :duracao WHERE id = :id"
+                "UPDATE " . self::tableName . " SET nome_filme = :nome_filme, descricao_filme = :descricao_filme, duracao_filme = :duracao_filme WHERE id = :id"
             );
 
             $stmt->bindParam(':id', $dataFormularioUpdate['id'], PDO::PARAM_INT);
-            $stmt->bindParam(':nome', $dataFormularioUpdate['nome'], PDO::PARAM_STR);
-            $stmt->bindParam(':descricao', $dataFormularioUpdate['descricao'], PDO::PARAM_STR);
-            $stmt->bindParam(':duracao', $dataFormularioUpdate['duracao'], PDO::PARAM_STR);
+            $stmt->bindParam(':nome_filme', $dataFormularioUpdate['nome_filme'], PDO::PARAM_STR);
+            $stmt->bindParam(':descricao_filme', $dataFormularioUpdate['descricao_filme'], PDO::PARAM_STR);
+            $stmt->bindParam(':duracao_filme', $dataFormularioUpdate['duracao_filme'], PDO::PARAM_STR);
 
             $stmt->execute();
 
