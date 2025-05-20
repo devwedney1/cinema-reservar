@@ -1,7 +1,7 @@
 <?php
 require_once '../Connection/DataConnection.php';
 require_once '../Dao/FilmeDAO.php';
-require_once '../Model/Filme.php'
+require_once '../Model/Filme.php';
 
 class FilmeController {
     public function ListarFilmes() {
@@ -57,7 +57,7 @@ class FilmeController {
         $filmeDAO = new FilmeDAO();
 
         if (!isset($_POST['id'])) {
-            echo "ID do filme não informado."
+            echo "ID do filme não informado.";
             return;
         }
 
