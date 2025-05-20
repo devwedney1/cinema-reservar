@@ -1,63 +1,96 @@
 <?php
 
+require_once 'Sala.php';
+
 class Cadeira {
+    /**
+     * @var int
+     */
     private int $id;
-    private Sala $sala_id;
+    /**
+     * @var Sala
+     */
+    private Sala $sala;
+    /**
+     * @var int
+     */
+    private int $numeroCadeira;
 
-    private int $numero_cadeira;
-    
-    private DateTime $created_at;
-    private DateTime $updated_at;
-    private DateTime $deleted_at;
-
-    public function __construct($id, $sala_id, $numero_cadeira, $created_at, $updated_at, $deleted_at) {
+    public function __construct(int $id, Sala $sala, int $numeroCadeira) {
         $this->id = $id;
-        $this->sala_id = $sala_id;
-        $this->numero_cadeira = $numero_cadeira;
-        $this->created_at = $created_at;
-        $this->updated_at = $updated_at;
-        $this->deleted_at = $deleted_at;
+        $this->sala = $sala;
+        $this->numeroCadeira = $numeroCadeira;
     }
 
+    /**
+     * @return int
+     */
     public function getId(): int {
         return $this->id;
     }
+
+    /**
+     * @param int $id
+     *
+     * @return void
+     */
     public function setId(int $id): void {
         $this->id = $id;
     }
 
-    public function getSala_id(): Sala {
-        return $this->sala_id;
-    }
-    public function setSala_id(Sala $sala_id): void {
-        $this->sala_id = $sala_id;
+//    /**
+//     * @return int
+//     */
+//    public function getSalaId(): int
+//    {
+//        return $this->salaId;
+//    }
+//
+//    /**
+//     * @param Sala $salaId
+//     *
+//     * @return void
+//     */
+//    public function setSalaId(Sala $salaId): void {
+//        $this->salaId = $salaId;
+//    }
+
+    /**
+     * @return int
+     */
+    public function getNumeroCadeira(): int
+    {
+        return $this->numeroCadeira;
     }
 
-    public function getNumero_cadeira(): int {
-        return $this->numero_cadeira;
-    }
-    public function setNumero_cadeira(int $numero_cadeira): void {
-        $this->numero_cadeira = $numero_cadeira;
-    }
-
-    public function getCreated_at(): DateTime {
-        return $this->created_at;
-    }
-    public function setCreated_at(DateTime $created_at): void {
-        $this->created_at = $created_at;
+    /**
+     * @param int $numeroCadeira
+     *
+     * @return void
+     */
+    public function setNumeroCadeira(int $numeroCadeira): void
+    {
+        $this->numeroCadeira = $numeroCadeira;
     }
 
-    public function getUpdated_at(): DateTime {
-        return $this->updated_at;
-    }
-    public function setUpdated_at(DateTime $updated_at): void {
-        $this->updated_at = $updated_at;
-    }
-
-    public function getDeleted_at(): DateTime {
-        return $this->deleted_at;
-    }
-    public function setDeleted_at(DateTime $deleted_at): void {
-        $this->deleted_at = $deleted_at;
-    }
+//    public function getCreated_at(): DateTime {
+//        return $this->created_at;
+//    }
+//    public function setCreated_at(DateTime $created_at): void {
+//        $this->created_at = $created_at;
+//    }
+//
+//    public function getUpdated_at(): DateTime {
+//        return $this->updated_at;
+//    }
+//    public function setUpdated_at(DateTime $updated_at): void {
+//        $this->updated_at = $updated_at;
+//    }
+//
+//    public function getDeleted_at(): DateTime {
+//        return $this->deleted_at;
+//    }
+//    public function setDeleted_at(DateTime $deleted_at): void {
+//        $this->deleted_at = $deleted_at;
+//    }
 }
