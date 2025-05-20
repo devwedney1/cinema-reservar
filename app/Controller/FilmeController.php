@@ -1,73 +1,87 @@
 <?php
-require_once '../Connection/DataConnection.php';
 require_once '../Dao/FilmeDAO.php';
 require_once '../Model/Filme.php';
 
 class FilmeController {
-    public function ListarFilmes() {
-        $filmeDAO = new FilmeDAO();
-        
-        $listaDeFilmes = $filmeDAO->get();
 
-        print_r($listaDeFilmes);
+    /**
+     * @var FilmeDAO
+     */
+    protected FilmeDAO $filmeDAO;
+
+    /**
+     * @var Filme
+     */
+    protected Filme $filme;
+
+    /**
+     * @param FilmeDAO $filmeDAO
+     * @param Filme    $filme
+     */
+    public function __construct(FilmeDAO $filmeDAO, Filme $filme) {
+        $this->filmeDAO = $filmeDAO;
+        $this->filme = $filme;
+    }
+    public function indexFilme()
+    {
+        return $this->filmeDAO->get();
     }
 
-    public function CriarFilme() {
-        $filmeDAO = new FilmeDAO();
+    /**
+     * @return array|null
+     */
+    public function createFilme()
+    {
 
-        //Dados POST
         $nome = $_POST['nome_filme'];
         $descricao = $_POST['descricao_filme'];
         $duracao = $_POST['duracao_filme'];
 
-        $novoFilme = new Filme();
-        $novoFilme->setNomeFilme($nome);
-        $novoFilme->setDescricaoFilme($descricao);
-        $novoFilme->setDuracaoFilme($duracao);
+        $this->filme->setNomeFilme($nome);
+        $this->filme->setDescricaoFilme($descricao);
+        $this->filme->setDuracaoFilme($duracao);
 
-        $resultado = $filmeDAO->create($novoFilme);
+        $resultado = $this->filmeDAO->create($this->filme);
 
-        print_r($resultado);
+        return $resultado;
     }
 
-    public function AtualizarFilme() {
-        $filmeDAO = new FilmeDAO();
-
-        if (!isset($_POST['id'])) {
-            echo "ID do filme não informado para atualização.";
-            return;
-        }
-
+    /**
+     * @return array|null
+     */
+    public function updateFilme()
+    {
         $id = $_POST['id'];
         $nome = $_POST['nome_filme'];
         $descricao = $_POST['descricao_filme'];
         $duracao = $_POST['duracao_filme'];
 
-        $updateFilme = new Filme();
-        $updateFilme->setNomeFilme($nome);
-        $updateFilme->setDescricaoFilme($descricao);
-        $updateFilme->setDuracaoFilme($duracao);
+        $this->filme->setId($id);
+        $this->filme->setNomeFilme($nome);
+        $this->filme->setDescricaoFilme($descricao);
+        $this->filme->setDuracaoFilme($duracao);
 
-        $resultado = $filmeDAO->update($updateFilme);
+        $resultado = $this->filmeDAO->update($this->filme);
 
-        print_r($resultado);
+        return $resultado;
     }
 
-    public function DeletarFilme() {
-        $filmeDAO = new FilmeDAO();
-
-        if (!isset($_POST['id'])) {
-            echo "ID do filme não informado.";
-            return;
-        }
+    /**
+     * @return array|null
+     */
+    public function deleteFilme() {
 
         $id = $_POST['id'];
 
-        $deleteFilme = new Filme();
-        $deleteFilme->setId($id);
+        $this->filme->setId($id);
 
-        $resultado = $filmeDAO->delete($deleteFilme);
+        $resultado = $this->filmeDAO->delete($this->filme);
 
-        print_r($resultado);
+        return $resultado;
+    }
+
+    public function forceDeleteFilme()
+    {
+
     }
 }

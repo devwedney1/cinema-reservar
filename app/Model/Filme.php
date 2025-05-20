@@ -1,15 +1,18 @@
 <?php
 
+require_once 'CategoriaFilme.php';
+
 Class Filme
 {
     /**
      * @var int
      */
     private int $id;
+
     /**
-     * @var Categoria_filme
+     * @var CategoriaFilme
      */
-    private Categoria_filme $categoria_filme_id;
+    private CategoriaFilme $categoriaFilme;
     /**
      * @var string
      */
@@ -18,16 +21,21 @@ Class Filme
      * @var string
      */
     private string $descricaoFilme;
-    private $duracaoFilme;
+    /**
+     * @var DateTime
+     */
+    private DateTime $duracaoFilme;
 
     /**
-     * @param $nomeFilme
-     * @param $descricaoFilme
-     * @param $duracaoFilme
+     * @param int            $id
+     * @param CategoriaFilme $categoriaFilme
+     * @param string         $nomeFilme
+     * @param string         $descricaoFilme
+     * @param DateTime       $duracaoFilme
      */
-    public function __construct($id, $categoria_filme_id, $nomeFilme, $descricaoFilme, $duracaoFilme){
+    public function __construct(int $id, CategoriaFilme $categoriaFilme, string $nomeFilme, string $descricaoFilme, DateTime $duracaoFilme){
         $this->id = $id;
-        $this->categoria_filme_id = $categoria_filme_id;
+        $this->categoriaFilme = $categoriaFilme;
         $this->nomeFilme = $nomeFilme;
         $this->descricaoFilme = $descricaoFilme;
         $this->duracaoFilme = $duracaoFilme;
@@ -36,7 +44,8 @@ Class Filme
     /**
      * @return int
      */
-    public function getId(){
+    public function getId(): int
+    {
         return $this->id;
     }
 
@@ -45,27 +54,29 @@ Class Filme
      *
      * @return void
      */
-    public function setId($id){
+    public function setId($id): void
+    {
         $this->id = $id;
     }
 
-       /**
-     * @return Categoria_filme
-     */
-    public function getCategoria_filme_id(){
-        return $this->categoria_filme_id;
-    }
-       /**
-     * @return Categoria_filme
-     */
-    public function setCategoria_filme_id(Categoria_filme $categoria_filme_id){
-        $this->categoria_filme_id = $categoria_filme_id;
-    }
+//    /**
+//     * @return int
+//     */
+//    public function getCategoriaFilmeId(): int
+//    {
+//        return $this->categoriaFilme->getId();
+//    }
+//
+//    public function setCategoriaFilmeId(CategoriaFilme $categoriaFilme): void
+//    {
+//        $this->categoriaFilme = $categoriaFilme->getId();
+//    }
 
     /**
      * @return string
      */
-    public function getNomeFilme(){
+    public function getNomeFilme(): string
+    {
         return $this->nomeFilme;
     }
 
@@ -74,14 +85,16 @@ Class Filme
      *
      * @return void
      */
-    public function setNomeFilme($nomeFilme){
+    public function setNomeFilme($nomeFilme): void
+    {
         $this->nomeFilme = $nomeFilme;
     }
 
     /**
      * @return string
      */
-    public function getDescricaoFilme(){
+    public function getDescricaoFilme(): string
+    {
         return $this->descricaoFilme;
     }
 
@@ -90,15 +103,26 @@ Class Filme
      *
      * @return void
      */
-    public function setDescricaoFilme($descricaoFilme){
+    public function setDescricaoFilme($descricaoFilme): void
+    {
         $this->descricaoFilme = $descricaoFilme;
     }
 
-    public function getDuracaoFilme(){
+    /**
+     * @return DateTime
+     */
+    public function getDuracaoFilme(): DateTime
+    {
         return $this->duracaoFilme;
     }
 
-    public function setDuracaoFilme($duracaoFilme){
+    /**
+     * @param $duracaoFilme
+     *
+     * @return void
+     */
+    public function setDuracaoFilme($duracaoFilme): void
+    {
         $this->duracaoFilme = $duracaoFilme;
     }
 }

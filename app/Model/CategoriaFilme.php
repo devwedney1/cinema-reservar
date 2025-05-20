@@ -1,23 +1,22 @@
 <?php
 
-class Horario_sessao {
+class CategoriaFilme {
     /**
      * @var int
      */
     private int $id;
     /**
-     * @var DateTime
+     * @var string
      */
-    private DateTime $tempoSessoes;
+    private string $nomeCategoria;
 
     /**
-     * @param int      $id
-     * @param DateTime $tempoSessoes
+     * @param int    $id
+     * @param string $nomeCategoria
      */
-    public function __construct(int $id, DateTime $tempoSessoes) {
+    public function __construct(int $id, string $nomeCategoria) {
         $this->id = $id;
-        $this->tempoSessoes = $tempoSessoes;
-
+        $this->nomeCategoria = $nomeCategoria;
     }
 
     /**
@@ -38,46 +37,39 @@ class Horario_sessao {
         $this->id = $id;
     }
 
-//    public function getSessoesFilmes_id(): Sessao
-//    {
-//        return $this->sessoes_filmes_id;
-//    }
-//    public function setSessoes_filmes_id(Sessao $sessoes_filmes_id): void {
-//        $this->sessoes_filmes_id = $sessoes_filmes_id;
-//    }
-
     /**
-     * @return DateTime
+     * @return string
      */
-    public function getTempoSessoes(): DateTime
+    public function getNomeCategoria(): string
     {
-        return $this->tempoSessoes;
+        return $this->nomeCategoria;
     }
 
     /**
-     * @param DateTime $tempoSessoes
+     * @param string $nomeCategoria
      *
      * @return void
      */
-    public function setTempo_sessoes(DateTime $tempoSessoes): void
+    public function setNomeCategoria(string $nomeCategoria): void
     {
-        $this->tempoSessoes = $tempoSessoes;
+        $this->nomeCategoria = $nomeCategoria;
     }
 
-//    public function getCreated_at(): DateTime {
+//    public function getCreated_at(): DateTime
+//    {
 //        return $this->created_at;
 //    }
 //    public function setCreated_at(DateTime $created_at): void {
 //        $this->created_at = $created_at;
 //    }
-//
+
 //    public function getUpdated_at(): DateTime {
 //        return $this->updated_at;
 //    }
 //    public function setUpdated_at(DateTime $updated_at): void {
 //        $this->updated_at = $updated_at;
 //    }
-//
+
 //    public function getDeleted_at(): DateTime {
 //        return $this->deleted_at;
 //    }
