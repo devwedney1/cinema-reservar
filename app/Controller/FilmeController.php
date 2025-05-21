@@ -3,37 +3,19 @@ require_once '../Dao/FilmeDAO.php';
 require_once '../Model/Filme.php';
 require_once '../Model/CategoriaFilme.php';
 
-class FilmeController {
+class FilmeController
+{
+    private FilmeDAO $filmeDAO;
 
-    /**
-     * @var FilmeDAO
-     */
-    protected FilmeDAO $filmeDAO;
-
-    /**
-     * @var Filme
-     */
-    protected Filme $filme;
-
-    /**
-     * @var CategoriaFilme
-     */
-    protected CategoriaFilme $categoriaFilme;
-
-
-    /**
-     * @param FilmeDAO       $filmeDAO
-     * @param Filme          $filme
-     * @param CategoriaFilme $categoriaFilme
-     */
-    public function __construct(FilmeDAO $filmeDAO, Filme $filme, CategoriaFilme $categoriaFilme) {
+    public function __construct(FilmeDAO $filmeDAO)
+    {
         $this->filmeDAO = $filmeDAO;
-        $this->filme = $filme;
-        $this->categoriaFilme = $categoriaFilme;
     }
 
     /**
-     * @return array
+     * Lista todos os filmes
+     *
+     * @return Filme[]
      */
     public function indexFilme(): array
     {
@@ -41,60 +23,61 @@ class FilmeController {
     }
 
     /**
-     * @return array|null
+     * Cria um novo filme
+     *
+     * @param array $data
+     * @return bool
      */
-    public function createFilme()
+    public function createFilme(array $data): bool
     {
+        $filme = new Filme(
+            $data['nome_filme'],
+            $data['descricao_filme'],
+            $data['duracao_filme'],
+            (int) $data['categoria_filme_id']
+        );
 
-        $nome = $_POST['nome_filme'];
-        $descricao = $_POST['descricao_filme'];
-        $duracao = $_POST['duracao_filme'];
-
-        $this->filme->setNomeFilme($nome);
-        $this->filme->setDescricaoFilme($descricao);
-        $this->filme->setDuracaoFilme($duracao);
-
-        $resultado = $this->filmeDAO->create($this->filme);
-
-        return $resultado;
+        return $this->filmeDAO->create($filme);
     }
 
     /**
-     * @return array|null
+     * Atualiza um filme existente
+     *
+     * @param array $data
+     * @return bool
      */
-    public function updateFilme()
+    public function updateFilme(array $data): bool
     {
-        $id = $_POST['id'];
-        $nome = $_POST['nome_filme'];
-        $descricao = $_POST['descricao_filme'];
-        $duracao = $_POST['duracao_filme'];
+        $filme = new Filme(
+            (int) $data['id'],
+            $data['nome_filme'],
+            $data['descricao_filme'],
+            $data['duracao_filme'],
+            (int) $data['categoria_filme_id']
+        );
 
-        $this->filme->setId($id);
-        $this->filme->setNomeFilme($nome);
-        $this->filme->setDescricaoFilme($descricao);
-        $this->filme->setDuracaoFilme($duracao);
-
-        $resultado = $this->filmeDAO->update($this->filme);
-
-        return $resultado;
+        return $this->filmeDAO->update($filme);
     }
 
     /**
-     * @return array|null
+     * Deleta um filme (soft delete)
+     *
+     * @param int $id
+     * @return bool
      */
-    public function deleteFilme() {
-
-        $id = $_POST['id'];
-
-        $this->filme->setId($id);
-
-        $resultado = $this->filmeDAO->delete($this->filme);
-
-        return $resultado;
+    public function deleteFilme(int $id): bool
+    {
+        return $this->filmeDAO->delete($id);
     }
 
-    public function forceDeleteFilme()
+    /**
+     * Deleta um filme de forma permanente
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function forceDeleteFilme(int $id): bool
     {
-
+        return $this->filmeDAO->forceDelete($id);
     }
 }

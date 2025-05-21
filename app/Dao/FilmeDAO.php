@@ -8,6 +8,8 @@ class FilmeDAO
     private $conexao;
     private const tableName = 'filmes';
 
+    private const tableNameCategoria = 'categoria_filmes';
+
     public function __construct ()
     {
         $this->conexao = DataConnection::getConnection();
@@ -37,13 +39,27 @@ class FilmeDAO
     /**
      * @return array
      */
-    public function get ()
+    public function get (): array
     {
         try {
-            $stmt = $this->conexao->query("SELECT * FROM" . self::tableName);
-            $stmt->execute();
+            $sql = "SELECT f.*, c.nome_categoria FROM  " . self::tableName . " f LEFT JOIN " . self::tableNameCategoria . " c ON f.categoria_filme_id = c.id";
+            $stmt = $this->conexao->query($sql);
+            $filmes = [];
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $CategoriaFilme = new CategoriaFilme($row['categoria_filme_id'], $row['nome_categoria']);
+                $filme = new Filme(
+                    (int) $row['id'],
+                    $row['nome_filme'],
+                    $row['descricao_filme'],
+                    $row['duracao_filme'],
+                    (int) $row['categoria_filme_id'],
+                    $CategoriaFilme
+                );
+                $filmes[] = $filme;
+            }
+
+            return $filmes;
         } catch (PDOException $e) {
             throw new PDOException("ERRO ao buscar um filme" . $e->getMessage());
         }
