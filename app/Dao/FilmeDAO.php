@@ -5,9 +5,11 @@ require_once '../Model/Filme.php';
 
 class FilmeDAO
 {
+    /**
+     * @var PDO|null
+     */
     private $conexao;
     private const tableName = 'filmes';
-
     private const tableNameCategoria = 'categoria_filmes';
 
     public function __construct ()
@@ -17,24 +19,43 @@ class FilmeDAO
 
     /**
      * @param int $idfilme
+     * @param int $idCategoriaFilme
      *
-     * @return mixed
+     * @return Filme|null
      */
-    public function first (int $idfilme)
+    public function first (int $idfilme, int $idCategoriaFilme): ?Filme
     {
         try {
 
-            $query = "SELECT * FROM " . self::tableName . " where id = :idfilme LIMIT 1";
+            $sql = "SELECT f.*, c.nome_categoria FROM  " . self::tableName . " f INNER JOIN " . self::tableNameCategoria . " c ON f.categoria_filme_id = c.id" . " where f.id = :idfilme LIMIT 1";
 
-            $stmt = $this->conexao->prepare($query);
+            $stmt = $this->conexao->prepare($sql);
             $stmt->bindParam(':idfilme', $idfilme, PDO::PARAM_INT);
             $stmt->execute();
 
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $returnFilme = null;
+
+            if($row) {
+                $CategoriaFilme = new CategoriaFilme($row['categoria_filme_id'], $row['nome_categoria']);
+                $filme = new Filme(
+                    (int) $row['id'],
+                    $row['nome_filme'],
+                    $row['descricao_filme'],
+                    $row['duracao_filme'],
+                    (int) $row['categoria_filme_id'],
+                    $CategoriaFilme
+                );
+                $returnFilme = $filme;
+            }
+
+            return $returnFilme;
         } catch (PDOException $e) {
             throw new PDOException("ERRO ao buscar um filme" . $e->getMessage());
         }
     }
+
 
     /**
      * @return array

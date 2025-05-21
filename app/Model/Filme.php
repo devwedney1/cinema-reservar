@@ -24,6 +24,7 @@ class Filme
      * @var int
      */
     private int $categoriaFilmeId;
+
     /**
      * @var CategoriaFilme
      */
@@ -150,7 +151,7 @@ class Filme
      */
     public function getCategoriaFilmeId(): int
     {
-        return $this->categoriaFilmeId;
+        return $this->categoriaFilme->getId();
     }
 
     /**

@@ -5,10 +5,8 @@ class CategoriaFilme {
      * @var int
      */
     private int $id;
-    /**
-     * @var string
-     */
-    private string $nomeCategoria;
+
+    private ?string $nomeCategoria;
 
     /**
      * @param int    $id
@@ -37,9 +35,7 @@ class CategoriaFilme {
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
+
     public function getNomeCategoria(): string
     {
         return $this->nomeCategoria;
@@ -76,4 +72,5 @@ class CategoriaFilme {
 //    public function setDeleted_at(DateTime $deleted_at): void {
 //        $this->deleted_at = $deleted_at;
 //    }
+
 }
