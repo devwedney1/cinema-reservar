@@ -70,21 +70,15 @@ class IngressoDAO {
             $this->conexao->beginTransaction();
 
             $dataFormularioIngresso = [
-                'sessao_id' => $ingresso->getSessao_id(),
-                'cadeira_id' => $ingresso->getCadeira_id(),
-                'forma_pagamento_id' => $ingresso->getForma_pagamento_id(),
                 'preco' => $ingresso->getPreco(),
                 'status' => $ingresso->getStatus(),
             ];
 
             $stmt = $this->conexao->prepare(
-                "INSERT INTO " . self::tableName . "(sessao_id, cadeira_id, forma_pagamento_id, preco, status) 
-                VALUES (:sessao_id, :cadeira_id, :forma_pagamento_id, :preco, :status)"
+                "INSERT INTO " . self::tableName . "(preco, status) 
+                VALUES (:preco, :status)"
             );
 
-            $stmt->bindParam(':sessao_id', $dataFormularioIngresso['sessao_id'], PDO::PARAM_INT);
-            $stmt->bindParam(':cadeira_id', $dataFormularioIngresso['cadeira_id'], PDO::PARAM_INT);
-            $stmt->bindParam(':forma_pagamento_id', $dataFormularioIngresso['forma_pagamento_id'], PDO::PARAM_INT);
             $stmt->bindParam(':preco', $dataFormularioIngresso['preco'], PDO::PARAM_STR);
             $stmt->bindParam(':status', $dataFormularioIngresso['status'], PDO::PARAM_STR);
             $stmt->execute();
@@ -117,31 +111,23 @@ class IngressoDAO {
         try {
             $this->conexao->beginTransaction();
 
-            if ($ingresso->getCadeira_id() == 0 || $ingresso->getCadeira_id() == '' || $ingresso->getCadeira_id() == ' ' || !$ingresso->getCadeira_id()) {
+            if ($ingresso->getId() == 0 || $ingresso->getId() == '' || $ingresso->getId() == ' ' || !$ingresso->getId()) {
                 return [
                     'success' => false,
-                    'message' => 'O id da cadeira é obrigatório para atualizar o ingresso',
+                    'message' => 'O id é obrigatório para atualizar o ingresso',
                 ];
             }
 
             $dataFormularioUpdate = [
                 'id' => $ingresso->getId(),
-                'sessao_id' => $ingresso->getSessao_id(),
-                'cadeira_id' => $ingresso->getCadeira_id(),
-                'forma_pagamento_id' => $ingresso->getForma_pagamento_id(),
                 'preco' => $ingresso->getPreco(),
-
             ];
 
             $stmt = $this->conexao->prepare(
-                "UPDATE " . self::tableName . " SET sessao_id = :sessao_id, 
-                forma_pagamento_id = :forma_pagamento_id, preco = :preco, vendido_em = NOW() WHERE cadeira_id = :cadeira_id"
+                "UPDATE " . self::tableName . " SET preco = :preco WHERE id = :id"
             );
 
             $stmt->bindParam(':id', $dataFormularioUpdate['id'], PDO::PARAM_INT);
-            $stmt->bindParam(':sessao_id', $dataFormularioUpdate['sessao_id'], PDO::PARAM_INT);
-            $stmt->bindParam(':cadeira_id', $dataFormularioUpdate['cadeira_id'], PDO::PARAM_INT);
-            $stmt->bindParam(':forma_pagamento_id', $dataFormularioUpdate['forma_pagamento_id'], PDO::PARAM_INT);
             $stmt->bindParam(':preco', $dataFormularioUpdate['preco'], PDO::PARAM_STR);
           
             $stmt->execute();
@@ -171,23 +157,23 @@ class IngressoDAO {
         try {
             $this->conexao->beginTransaction();
             
-            if ($ingresso->getCadeira_id() == 0 || $ingresso->getCadeira_id() == '' || $ingresso->getCadeira_id() == ' ' || !$ingresso->getCadeira_id()) {
+            if ($ingresso->getId() == 0 || $ingresso->getId() == '' || $ingresso->getId() == ' ' || !$ingresso->getId()) {
                 return [
                     'success' => false,
-                    'message' => 'O id da cadeira é obrigatório para deletar um ingresso',
+                    'message' => 'O id é obrigatório para deletar um ingresso',
                 ];
             }
 
             $dataFormularioDelete = [
-                'cadeira_id' => $ingresso->getCadeira_id(),
+                'id' => $ingresso->getId(),
             ];
 
 
 
             $stmt = $this->conexao->prepare(
-                'UPDATE ' . self::tableName . ' SET status = "cancelado" WHERE cadeira_id = :cadeira_id'
+                'UPDATE ' . self::tableName . ' SET status = "cancelado" WHERE id = :id'
             );
-            $stmt->bindParam(':cadeira_id', $dataFormularioDelete['cadeira_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':id', $dataFormularioDelete['id'], PDO::PARAM_INT);
             $stmt->execute();
 
 
