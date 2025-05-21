@@ -25,7 +25,7 @@ class Ingresso {
     /**
      * @return int
      */
-    public function getId(): int
+    public function get_id(): int
     {
         return $this->id;
     }
@@ -35,36 +35,36 @@ class Ingresso {
      *
      * @return void
      */
-    public function setId(int $id): void
+    public function set_id(int $id): void
     {
         $this->id = $id;
     }
 
-//    public function getSessao_id(): Sessao {
+//    public function get_sessao_id(): Sessao {
 //        return $this->sessao_id;
 //    }
-//    public function setSessao_id(Sessao $sessao_id): void {
+//    public function set_sessao_id(Sessao $sessao_id): void {
 //        $this->sessao_id = $sessao_id;
 //    }
 //
-//    public function getCadeira_id(): Cadeira {
+//    public function get_cadeira_id(): Cadeira {
 //        return $this->cadeira_id;
 //    }
-//    public function setCadeira_id(Cadeira $cadeira_id): void {
+//    public function set_cadeira_id(Cadeira $cadeira_id): void {
 //        $this->cadeira_id = $cadeira_id;
 //    }
 //
-//    public function getForma_pagamento_id(): Forma_pagamento {
+//    public function get_forma_pagamento_id(): Forma_pagamento {
 //        return $this->forma_pagamento_id;
 //    }
-//    public function setForma_pagamento_id(Forma_pagamento $forma_pagamento_id): void {
+//    public function set_forma_pagamento_id(Forma_pagamento $forma_pagamento_id): void {
 //        $this->forma_pagamento_id = $forma_pagamento_id;
 //    }
 
     /**
      * @return float
      */
-    public function getPreco(): float
+    public function get_preco(): float
     {
         return $this->preco;
     }
@@ -74,7 +74,7 @@ class Ingresso {
      *
      * @return void
      */
-    public function setPreco(float $preco): void
+    public function set_preco(float $preco): void
     {
         $this->preco = $preco;
     }
@@ -82,7 +82,7 @@ class Ingresso {
     /**
      * @return string
      */
-    public function getStatus(): string
+    public function get_status(): string
     {
         return $this->status;
     }
@@ -92,15 +92,15 @@ class Ingresso {
      *
      * @return void
      */
-    public function setStatus(string $status): void
+    public function set_status(string $status): void
     {
         $this->status = $status;
     }
 
-//    public function getVendido_em(): DateTime {
+//    public function get_vendido_em(): DateTime {
 //        return $this->vendido_em;
 //    }
-//    public function setVendido_em(DateTime $vendido_em): void {
+//    public function set_vendido_em(DateTime $vendido_em): void {
 //        $this->vendido_em = $vendido_em;
 //    }
 }

@@ -83,17 +83,17 @@ $filmes = $filmes->indexFilme();
     <ul>
         <?php foreach ($filmes as $filme): ?>
             <li>
-                <p><strong>ID:</strong> <?= $filme->getId() ?></p>
-                <p><strong>Nome:</strong> <?= htmlspecialchars($filme->getNomeFilme()) ?></p>
-                <p><strong>Descrição:</strong> <?= htmlspecialchars($filme->getDescricaoFilme()) ?></p>
-                <p><strong>Duração:</strong> <?= htmlspecialchars($filme->getDuracaoFilme()) ?></p>
-                <p><strong>Categoria:</strong> <?= htmlspecialchars($filme->getCategoriaFilme()) ?></p>
+                <p><strong>ID:</strong> <?= $filme->get_id() ?></p>
+                <p><strong>Nome:</strong> <?= htmlspecialchars($filme->get_nomeFilme()) ?></p>
+                <p><strong>Descrição:</strong> <?= htmlspecialchars($filme->get_descricaoFilme()) ?></p>
+                <p><strong>Duração:</strong> <?= htmlspecialchars($filme->get_duracaoFilme()) ?></p>
+                <p><strong>Categoria:</strong> <?= htmlspecialchars($filme->get_categoriaFilme()) ?></p>
                 <hr>
                 <button class="buttonUpdate">
-                    <a href="../View/filmesForm.php?id=<?= $filme->getId() ?>&categoria_id=<?= $filme->getCategoriaFilmeId() ?>">Atualizar Filme</a>
+                    <a href="../View/filmesForm.php?id=<?= $filme->get_id() ?>&categoria_id=<?= $filme->get_categoriaFilmeId() ?>">Atualizar Filme</a>
                 </button>
                 <button class="buttonDelete">
-                    <a href="../Controller/FilmeController.php?id=<?= $filme->getId() ?>&categoria_id=<?= $filme->getCategoriaFilmeId() ?>">Excluir Filme</a>
+                    <a href="../Controller/FilmeController.php?id=<?= $filme->get_id() ?>&categoria_id=<?= $filme->get_categoriaFilmeId() ?>">Excluir Filme</a>
                 </button>
             </li>
         <?php endforeach; ?>

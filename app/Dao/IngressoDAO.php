@@ -8,7 +8,7 @@ class IngressoDAO {
     private const tableName = 'ingressos';
 
     public function __construct() {
-        $this->conexao = DataConnection::getConnection();
+        $this->conexao = DataConnection::get_connection();
     }
 
     public function get() {
@@ -18,49 +18,49 @@ class IngressoDAO {
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar um ingresso" . $e->getMessage());
+            throw new PDOException("ERRO ao buscar um ingresso" . $e->get_message());
         }
     }
 
-    public function getBySessao(Sessao $sessao) {
+    public function get_bySessao(Sessao $sessao) {
         try {
             $stmt = $this->conexao->prepare("SELECT * FROM " . self::tableName . " WHERE sessao_id = :sessao_id");
 
-            $sessao_id = $sessao->getId();
+            $sessao_id = $sessao->get_id();
             $stmt->bindParam(':sessao_id', $sessao_id, PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar por sessao " . $e->getMessage());
+            throw new PDOException("ERRO ao buscar por sessao " . $e->get_message());
         }
     }
 
-    public function getByCadeira(Cadeira $cadeira) {
+    public function get_byCadeira(Cadeira $cadeira) {
         try {
             $stmt = $this->conexao->prepare("SELECT * FROM " . self::tableName . " WHERE cadeira_id = :cadeira_id");
 
-            $cadeira_id = $cadeira->getId();
+            $cadeira_id = $cadeira->get_id();
             $stmt->bindParam(':cadeira_id', $cadeira_id, PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar por cadeira " . $e->getMessage());
+            throw new PDOException("ERRO ao buscar por cadeira " . $e->get_message());
         }
     }
 
-    public function getByFormaPagamento(Forma_pagamento $forma_pagamento) {
+    public function get_byFormaPagamento(Forma_pagamento $forma_pagamento) {
         try {
             $stmt = $this->conexao->prepare("SELECT * FROM " . self::tableName . " WHERE forma_pagamento_id = :forma_pagamento_id");
 
-            $forma_pagamento_id = $forma_pagamento->getId();
+            $forma_pagamento_id = $forma_pagamento->get_id();
             $stmt->bindParam(':forma_pagamento_id', $forma_pagamento_id, PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar por forma de pagamento " . $e->getMessage());
+            throw new PDOException("ERRO ao buscar por forma de pagamento " . $e->get_message());
         }
     }
 
@@ -70,8 +70,8 @@ class IngressoDAO {
             $this->conexao->beginTransaction();
 
             $dataFormularioIngresso = [
-                'preco' => $ingresso->getPreco(),
-                'status' => $ingresso->getStatus(),
+                'preco' => $ingresso->get_preco(),
+                'status' => $ingresso->get_status(),
             ];
 
             $stmt = $this->conexao->prepare(
@@ -101,7 +101,7 @@ class IngressoDAO {
 
         } catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao adicionar ingresso " . $e->getMessage());
+            throw new PDOException("ERRO ao adicionar ingresso " . $e->get_message());
         }
         
     }
@@ -111,7 +111,7 @@ class IngressoDAO {
         try {
             $this->conexao->beginTransaction();
 
-            if ($ingresso->getId() == 0 || $ingresso->getId() == '' || $ingresso->getId() == ' ' || !$ingresso->getId()) {
+            if ($ingresso->get_id() == 0 || $ingresso->get_id() == '' || $ingresso->get_id() == ' ' || !$ingresso->get_id()) {
                 return [
                     'success' => false,
                     'message' => 'O id é obrigatório para atualizar o ingresso',
@@ -119,8 +119,8 @@ class IngressoDAO {
             }
 
             $dataFormularioUpdate = [
-                'id' => $ingresso->getId(),
-                'preco' => $ingresso->getPreco(),
+                'id' => $ingresso->get_id(),
+                'preco' => $ingresso->get_preco(),
             ];
 
             $stmt = $this->conexao->prepare(
@@ -149,7 +149,7 @@ class IngressoDAO {
             }
         }  catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao atualizar o ingresso " . $e->getMessage());
+            throw new PDOException("ERRO ao atualizar o ingresso " . $e->get_message());
         }
     }
 
@@ -157,7 +157,7 @@ class IngressoDAO {
         try {
             $this->conexao->beginTransaction();
             
-            if ($ingresso->getId() == 0 || $ingresso->getId() == '' || $ingresso->getId() == ' ' || !$ingresso->getId()) {
+            if ($ingresso->get_id() == 0 || $ingresso->get_id() == '' || $ingresso->get_id() == ' ' || !$ingresso->get_id()) {
                 return [
                     'success' => false,
                     'message' => 'O id é obrigatório para deletar um ingresso',
@@ -165,7 +165,7 @@ class IngressoDAO {
             }
 
             $dataFormularioDelete = [
-                'id' => $ingresso->getId(),
+                'id' => $ingresso->get_id(),
             ];
 
 
@@ -188,7 +188,7 @@ class IngressoDAO {
             }
         } catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao deletar o ingresso " . $e->getMessage());
+            throw new PDOException("ERRO ao deletar o ingresso " . $e->get_message());
         }
     }
 }

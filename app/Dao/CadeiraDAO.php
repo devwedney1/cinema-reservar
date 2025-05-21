@@ -1,152 +1,83 @@
 <?php
 
-require_once '../Connection/DataConnection.php';
-require_once '../Model/Cadeira.php';
-require_once '../Model/Sala.php';
+require_once __DIR__ . '/../Connection/DataConnection.php';
+require_once __DIR__ . '/../Model/Cadeira.php';
+require_once __DIR__ . '/../Model/Sala.php';
 
-class CadeiraDAO {
-    private $conexao;
-    private const tableName = 'cadeiras';
-
-    public function __construct() {
-        $this->conexao = DataConnection::getConnection();
-    }
-
-    public function get() {
-        try {
-            $stmt = $this->conexao->query("SELECT * FROM " . self::tableName);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar uma cadeira " . $e->getMessage());
-        }
-    }
-
-    public function getBySala(Sala $sala) {
-        try {
-            $stmt = $this->conexao->prepare("SELECT * FROM " . self::tableName . " WHERE sala_id = :sala_id");
-
-            $sala_id = $sala->getId();
-            $stmt->bindParam(':sala_id', $sala_id, PDO::PARAM_INT);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar cadeiras por sala " . $e->getMessage());
-        }
-    }
-
-    public function create(Cadeira $cadeira)
+class CadeiraDAO
+{
+    public function get(): array
     {
         try {
-            $this->conexao->beginTransaction();
+            $con = DataConnection::get_connection();
+            if (!$con) throw new Exception("Sem conexão com o banco.");
 
-            $dataFormularioCadeira = [
-                'sala_id' => $cadeira->getSala_id(),
-                'numero_cadeira' => $cadeira->getNumero_cadeira(),
-            ];
-
-            $stmt = $this->conexao->prepare(
-                "INSERT INTO " . self::tableName . "(sala_id, numero_cadeira) 
-                VALUES (:sala_id, :numero_cadeira)"
-            );
-
-            $stmt->bindParam(':sala_id', $dataFormularioCadeira['sala_id'], PDO::PARAM_INT);
-            $stmt->bindParam(':numero_cadeira', $dataFormularioCadeira['numero_cadeira'], PDO::PARAM_INT);
-            $stmt->execute();
-
-            if ($stmt->rowCount() > 0) {
-                $this->conexao->commit();
-
-                return [
-                    'success' => true,
-                    'message' => 'Cadeira cadastrada com sucesso!',
-                    'id' => $this->conexao->lastInsertId(),
-                ];
-            }
-
-        } catch (PDOException $e) {
-            $this->conexao->rollBack();
-            throw new PDOException("ERRO ao criar uma cadeira " . $e->getMessage());
+            $stmt = $con->query("SELECT * FROM cadeiras WHERE deleted_at IS NULL");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return ["erro" => $e->get_message()];
         }
-        
     }
 
-    public function update(Cadeira $cadeira)
+    public function get_bySala(Sala $sala): array
     {
         try {
-            $this->conexao->beginTransaction();
+            $con = DataConnection::get_connection();
+            if (!$con) throw new Exception("Sem conexão com o banco.");
 
-            if ($cadeira->getId() == 0 || $cadeira->getId() == '' || $cadeira->getId() == ' ' || !$cadeira->getId()) {
-                return [
-                    'success' => false,
-                    'message' => 'O id e obrigatorio para atualizar uma cadeira',
-                ];
-            }
-
-            $dataFormularioUpdate = [
-                'id' => $cadeira->getId(),
-                'sala_id' => $cadeira->getSala_id(),
-                'numero_cadeira' => $cadeira->getNumero_cadeira(),
-            ];
-
-            $stmt = $this->conexao->prepare(
-                "UPDATE " . self::tableName . " SET sala_id = :sala_id, numero_cadeira = :numero_cadeira WHERE id = :id"
-            );
-
-            $stmt->bindParam(':id', $dataFormularioUpdate['id'], PDO::PARAM_INT);
-            $stmt->bindParam(':sala_id', $dataFormularioUpdate['sala_id'], PDO::PARAM_INT);
-            $stmt->bindParam(':numero_cadeira', $dataFormularioUpdate['numero_cadeira'], PDO::PARAM_INT);
-            $stmt->execute();
-
-            if ($stmt->rowCount() > 0) {
-                $this->conexao->commit();
-
-                return [
-                    'success' => true,
-                    'message' => 'Cadeira atualizada com sucesso!',
-                ];
-            }
-        }  catch (PDOException $e) {
-            $this->conexao->rollBack();
-            throw new PDOException("ERRO ao atualizar a cadeira " . $e->getMessage());
+            $stmt = $con->prepare("SELECT * FROM cadeiras WHERE sala_id = :sala_id AND deleted_at IS NULL");
+            $stmt->execute([':sala_id' => $sala->get_id()]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return ["erro" => $e->get_message()];
         }
     }
 
-    public function delete(Cadeira $cadeira) {
+    public function create(Cadeira $cadeira): array
+    {
         try {
-            $this->conexao->beginTransaction();
-            
-            if ($cadeira->getId() == 0 || $cadeira->getId() == '' || $cadeira->getId() == ' ' || !$cadeira->getId()) {
-                return [
-                    'success' => false,
-                    'message' => 'O id é obrigatório para deletar uma cadeira',
-                ];
-            }
+            $con = DataConnection::get_connection();
+            if (!$con) throw new Exception("Sem conexão com o banco.");
 
-            $dataFormularioDelete = [
-                'id' => $cadeira->getId(),
-            ];
+            $stmt = $con->prepare("INSERT INTO cadeiras (sala_id, numero_cadeira) VALUES (:sala_id, :numero_cadeira)");
+            $stmt->execute([
+                ':sala_id' => $cadeira->get_sala()->get_id(),
+                ':numero_cadeira' => $cadeira->get_numeroCadeira()
+            ]);
+            return ["mensagem" => "Cadeira criada com sucesso."];
+        } catch (Exception $e) {
+            return ["erro" => $e->get_message()];
+        }
+    }
 
-            $stmt = $this->conexao->prepare(
-                'UPDATE ' . self::tableName . ' SET deleted_at = NOW() WHERE id = :id'
-            );
+    public function update(Cadeira $cadeira): array
+    {
+        try {
+            $con = DataConnection::get_connection();
+            if (!$con) throw new Exception("Sem conexão com o banco.");
 
-            $stmt->bindParam(':id', $dataFormularioDelete['id'], PDO::PARAM_INT);
-            $stmt->execute();
+            $stmt = $con->prepare("UPDATE cadeiras SET numero_cadeira = :numero_cadeira WHERE id = :id");
+            $stmt->execute([
+                ':id' => $cadeira->get_id(),
+                ':numero_cadeira' => $cadeira->get_numeroCadeira()
+            ]);
+            return ["mensagem" => "Cadeira atualizada com sucesso."];
+        } catch (Exception $e) {
+            return ["erro" => $e->get_message()];
+        }
+    }
 
-            if ($stmt->rowCount() > 0) {
-                $this->conexao->commit();
+    public function delete(Cadeira $cadeira): array
+    {
+        try {
+            $con = DataConnection::get_connection();
+            if (!$con) throw new Exception("Sem conexão com o banco.");
 
-                return [
-                    'success' => true,
-                    'message' => 'Cadeira deletada com sucesso!',
-                ];
-            }
-        } catch (PDOException $e) {
-            $this->conexao->rollBack();
-            throw new PDOException("ERRO ao deletar a cadeira " . $e->getMessage());
+            $stmt = $con->prepare("UPDATE cadeiras SET deleted_at = NOW() WHERE id = :id");
+            $stmt->execute([':id' => $cadeira->get_id()]);
+            return ["mensagem" => "Cadeira excluída com sucesso."];
+        } catch (Exception $e) {
+            return ["erro" => $e->get_message()];
         }
     }
 }

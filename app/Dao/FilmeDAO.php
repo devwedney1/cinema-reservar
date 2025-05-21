@@ -14,7 +14,7 @@ class FilmeDAO
 
     public function __construct ()
     {
-        $this->conexao = DataConnection::getConnection();
+        $this->conexao = DataConnection::get_connection();
     }
 
     /**
@@ -52,7 +52,7 @@ class FilmeDAO
 
             return $returnFilme;
         } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar um filme" . $e->getMessage());
+            throw new PDOException("ERRO ao buscar um filme" . $e->get_message());
         }
     }
 
@@ -82,7 +82,7 @@ class FilmeDAO
 
             return $filmes;
         } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar um filme" . $e->getMessage());
+            throw new PDOException("ERRO ao buscar um filme" . $e->get_message());
         }
     }
 
@@ -98,9 +98,9 @@ class FilmeDAO
             $this->conexao->beginTransaction();
 
             $dataFormularioFilme = [
-                'nome_filme' => $filme->getNomeFilme(),
-                'descricao_filme' => $filme->getDescricaoFilme(),
-                'duracao_filme' => $filme->getDuracaoFilme(),
+                'nome_filme' => $filme->get_nomeFilme(),
+                'descricao_filme' => $filme->get_descricaoFilme(),
+                'duracao_filme' => $filme->get_duracaoFilme(),
             ];
 
             $stmt = $this->conexao->prepare(
@@ -124,7 +124,7 @@ class FilmeDAO
             }
         } catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao cadastra um filme" . $e->getMessage());
+            throw new PDOException("ERRO ao cadastra um filme" . $e->get_message());
         }
     }
 
@@ -138,7 +138,7 @@ class FilmeDAO
         try {
             $this->conexao->beginTransaction();
 
-            if ($filme->getId() == 0 || $filme->getId() == '' || $filme->getId() == ' ' || !$filme->getId()) {
+            if ($filme->get_id() == 0 || $filme->get_id() == '' || $filme->get_id() == ' ' || !$filme->get_id()) {
                 return [
                     'success' => false,
                     'message' => 'O id e obrigatorio para atualizar um filme',
@@ -146,10 +146,10 @@ class FilmeDAO
             }
 
             $dataFormularioUpdate = [
-                'id' => $filme->getId(),
-                'nome_filme' => $filme->getNomeFilme(),
-                'descricao_filme' => $filme->getDescricaoFilme(),
-                'duracao_filme' => $filme->getDuracaoFilme(),
+                'id' => $filme->get_id(),
+                'nome_filme' => $filme->get_nomeFilme(),
+                'descricao_filme' => $filme->get_descricaoFilme(),
+                'duracao_filme' => $filme->get_duracaoFilme(),
             ];
 
             $stmt = $this->conexao->prepare(
@@ -174,7 +174,7 @@ class FilmeDAO
 
         } catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao atualizar o filme" . $e->getMessage());
+            throw new PDOException("ERRO ao atualizar o filme" . $e->get_message());
         }
     }
 
@@ -188,7 +188,7 @@ class FilmeDAO
         try {
             $this->conexao->beginTransaction();
 
-            if ($filme->getId() == 0 || $filme->getId() == '' || $filme->getId() == ' ' || !$filme->getId()) {
+            if ($filme->get_id() == 0 || $filme->get_id() == '' || $filme->get_id() == ' ' || !$filme->get_id()) {
                 return [
                     'success' => false,
                     'message' => 'O id e obrigatorio para delete suave do filme',
@@ -196,7 +196,7 @@ class FilmeDAO
             }
 
             $dataFormularioDelete = [
-                'id' => $filme->getId(),
+                'id' => $filme->get_id(),
             ];
 
             $stmt = $this->conexao->prepare(
@@ -218,7 +218,7 @@ class FilmeDAO
 
         } catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao deletar o filme" . $e->getMessage());
+            throw new PDOException("ERRO ao deletar o filme" . $e->get_message());
         }
     }
 
@@ -251,7 +251,7 @@ class FilmeDAO
 
         } catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao deleta para sempre r o filme" . $e->getMessage());
+            throw new PDOException("ERRO ao deleta para sempre r o filme" . $e->get_message());
         }
     }
 }

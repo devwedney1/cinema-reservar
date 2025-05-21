@@ -8,7 +8,7 @@ class SalaDAO {
     private const tableName = 'salas';
 
     public function __construct() {
-        $this->conexao = DataConnection::getConnection();
+        $this->conexao = DataConnection::get_connection();
     }
 
     public function get() {
@@ -18,7 +18,7 @@ class SalaDAO {
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar uma sala" . $e->getMessage());
+            throw new PDOException("ERRO ao buscar uma sala" . $e->get_message());
         }
     }
 
@@ -28,7 +28,8 @@ class SalaDAO {
             $this->conexao->beginTransaction();
 
             $dataFormularioSala = [
-                'nome_sala' => $sala->getNome_sala(),
+                'nome_sala' => $sala->get_nomeSala(),
+
             ];
 
             $stmt = $this->conexao->prepare(
@@ -36,7 +37,7 @@ class SalaDAO {
                 VALUES (:nome_sala)"
             );
 
-            $stmt->bindParam(':nome_sala', $dataFormularioIngresso['nome_sala'], PDO::PARAM_STR);
+            $stmt->bindParam(':nome_sala', $dataFormularioSala['nome_sala'], PDO::PARAM_STR);
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {
@@ -57,7 +58,7 @@ class SalaDAO {
 
         } catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao criar sala " . $e->getMessage());
+            throw new PDOException("ERRO ao criar sala " . $e->get_message());
         }
         
     }
@@ -67,7 +68,7 @@ class SalaDAO {
         try {
             $this->conexao->beginTransaction();
 
-            if ($sala->getId() == 0 || $sala->getId() == '' || $sala->getId() == ' ' || !$sala->getId()) {
+            if ($sala->get_id() == 0 || $sala->get_id() == '' || $sala->get_id() == ' ' || !$sala->get_id()) {
                 return [
                     'success' => false,
                     'message' => 'O id da sala é obrigatório para atualizar a sala',
@@ -75,8 +76,8 @@ class SalaDAO {
             }
 
             $dataFormularioUpdate = [
-                'id' => $sala->getId(),
-                'nome_sala' => $sala->getNome_sala(),
+                'id' => $sala->get_id(),
+                'nome_sala' => $sala->get_nome_sala(),
             ];
 
             $stmt = $this->conexao->prepare(
@@ -105,7 +106,7 @@ class SalaDAO {
             }
         }  catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao atualizar a sala " . $e->getMessage());
+            throw new PDOException("ERRO ao atualizar a sala " . $e->get_message());
         }
     }
 
@@ -113,7 +114,7 @@ class SalaDAO {
         try {
             $this->conexao->beginTransaction();
             
-            if ($ingresso->getId() == 0 || $ingresso->getId() == '' || $ingresso->getId() == ' ' || !$ingresso->getId()) {
+            if ($ingresso->get_id() == 0 || $ingresso->get_id() == '' || $ingresso->get_id() == ' ' || !$ingresso->get_id()) {
                 return [
                     'success' => false,
                     'message' => 'O id é obrigatório para deletar a sala',
@@ -121,7 +122,7 @@ class SalaDAO {
             }
 
             $dataFormularioDelete = [
-                'id' => $sala->getId(),
+                'id' => $sala->get_id(),
             ];
 
 
@@ -144,7 +145,7 @@ class SalaDAO {
             }
         } catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao deletar a sala " . $e->getMessage());
+            throw new PDOException("ERRO ao deletar a sala " . $e->get_message());
         }
     }
 }

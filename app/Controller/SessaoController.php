@@ -24,9 +24,9 @@ class SessaoController {
         $filme_id = (int)$_GET['filme_id'];
 
         $filme = new Filme();
-        $filme->setId($filme_id);
+        $filme->set_id($filme_id);
 
-        $resultado = $sessaoDAO->getByFilmeId($filme);
+        $resultado = $sessaoDAO->get_byFilmeId($filme);
 
         print_r($resultado);
     }
@@ -41,9 +41,9 @@ class SessaoController {
         $sala_id = (int)$_GET['sala_id'];
 
         $sala = new Sala();
-        $sala->setId($sala_id);
+        $sala->set_id($sala_id);
 
-        $resultado = $sessaoDAO->getBySalaId($sala);
+        $resultado = $sessaoDAO->get_bySalaId($sala);
 
         print_r($resultado);
     }
@@ -60,8 +60,8 @@ class SessaoController {
         $sala_id = (int)$_POST['sala_id'];
 
         $novaSessao = new Sessao();
-        $novaSessao->setFilme_id($filme_id);
-        $novaSessao->setSala_id($sala_id);
+        $novaSessao->set_filme_id($filme_id);
+        $novaSessao->set_sala_id($sala_id);
 
         $resultado = $sessaoDAO->create($novaSessao);
 
@@ -82,9 +82,9 @@ class SessaoController {
 
         $updateSessao = new Sessao();
 
-        $updateSessao->setId($id);
-        $updateSessao->setFilme_id($filme_id);
-        $updateSessao->setSala_id($sala_id);
+        $updateSessao->set_id($id);
+        $updateSessao->set_filme_id($filme_id);
+        $updateSessao->set_sala_id($sala_id);
 
         $resultado = $sessaoDAO->update($updateSessao);
 
@@ -103,7 +103,7 @@ class SessaoController {
         $id = (int)$_POST['id'];
 
         $deleteSessao = new Sessao();
-        $deleteSessao->setId($id);
+        $deleteSessao->set_id($id);
 
         $resultado = $sessaoDAO->delete($deleteSessao);
 

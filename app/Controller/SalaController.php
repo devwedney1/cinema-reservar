@@ -23,7 +23,7 @@ class SalaController {
         $nome_sala = $_POST['nome_sala'];
 
         $novaSala = new Sala();
-        $novaSala->setNome_sala($nome_sala);
+        $novaSala->set_nome_sala($nome_sala);
 
         $resultado = $salaDAO->create($novaSala);
 
@@ -43,8 +43,8 @@ class SalaController {
         $nome_sala = $_POST['nome_sala'];
 
         $updateSala = new Sala();
-        $updateSala->setId($id);
-        $updateSala->setNome_sala($nome_sala);
+        $updateSala->set_id($id);
+        $updateSala->set_nome_sala($nome_sala);
 
         $resultado = $salaDAO->update($updateSala);
 
@@ -63,7 +63,7 @@ class SalaController {
         $id = (int)$_POST['id'];
 
         $deleteSala = new Sala();
-        $deleteSala->setId($id);
+        $deleteSala->set_id($id);
 
         $resultado = $salaDAO->delete($deleteSala);
 

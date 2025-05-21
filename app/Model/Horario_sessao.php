@@ -23,7 +23,7 @@ class Horario_sessao {
     /**
      * @return int
      */
-    public function getId(): int
+    public function get_id(): int
     {
         return $this->id;
     }
@@ -33,23 +33,23 @@ class Horario_sessao {
      *
      * @return void
      */
-    public function setId(int $id): void
+    public function set_id(int $id): void
     {
         $this->id = $id;
     }
 
-//    public function getSessoesFilmes_id(): Sessao
+//    public function get_sessoesFilmes_id(): Sessao
 //    {
 //        return $this->sessoes_filmes_id;
 //    }
-//    public function setSessoes_filmes_id(Sessao $sessoes_filmes_id): void {
+//    public function set_sessoes_filmes_id(Sessao $sessoes_filmes_id): void {
 //        $this->sessoes_filmes_id = $sessoes_filmes_id;
 //    }
 
     /**
      * @return DateTime
      */
-    public function getTempoSessoes(): DateTime
+    public function get_tempoSessoes(): DateTime
     {
         return $this->tempoSessoes;
     }
@@ -59,29 +59,29 @@ class Horario_sessao {
      *
      * @return void
      */
-    public function setTempo_sessoes(DateTime $tempoSessoes): void
+    public function set_tempo_sessoes(DateTime $tempoSessoes): void
     {
         $this->tempoSessoes = $tempoSessoes;
     }
 
-//    public function getCreated_at(): DateTime {
+//    public function get_created_at(): DateTime {
 //        return $this->created_at;
 //    }
-//    public function setCreated_at(DateTime $created_at): void {
+//    public function set_created_at(DateTime $created_at): void {
 //        $this->created_at = $created_at;
 //    }
 //
-//    public function getUpdated_at(): DateTime {
+//    public function get_updated_at(): DateTime {
 //        return $this->updated_at;
 //    }
-//    public function setUpdated_at(DateTime $updated_at): void {
+//    public function set_updated_at(DateTime $updated_at): void {
 //        $this->updated_at = $updated_at;
 //    }
 //
-//    public function getDeleted_at(): DateTime {
+//    public function get_deleted_at(): DateTime {
 //        return $this->deleted_at;
 //    }
-//    public function setDeleted_at(DateTime $deleted_at): void {
+//    public function set_deleted_at(DateTime $deleted_at): void {
 //        $this->deleted_at = $deleted_at;
 //    }
 }

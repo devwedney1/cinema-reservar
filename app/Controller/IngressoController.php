@@ -25,9 +25,9 @@ class IngressoController {
    //     $sessao_id = (int)$_GET['sessao_id'];
     //
     //    $sessao = new Sessao();
-    //    $sessao->setId($sessao_id);
+    //    $sessao->set_id($sessao_id);
     //
-    //    $resultado = $ingressoDAO->getBySessao($sessao);
+    //    $resultado = $ingressoDAO->get_bySessao($sessao);
     //
     //    print_r($resultado);
     //}
@@ -42,9 +42,9 @@ class IngressoController {
     //    $cadeira_id = (int)$_GET['cadeira_id'];
     //
     //    $cadeira = new Cadeira();
-    //    $cadeira->setId($cadeira_id);
+    //    $cadeira->set_id($cadeira_id);
     //
-    //    $resultado = $ingressoDAO->getByCadeira($cadeira);
+    //    $resultado = $ingressoDAO->get_byCadeira($cadeira);
     //
     //    print_r($resultado);
     //}
@@ -59,9 +59,9 @@ class IngressoController {
     //    $forma_pagamento_id = (int)$_GET['forma_pagamento_id'];
     //
     //    $forma_pagamento = new Forma_pagamento();
-    //    $forma_pagamento->setId($forma_pagamento_id);
+    //    $forma_pagamento->set_id($forma_pagamento_id);
     //
-    //    $resultado = $ingressoDAO->getByFormaPagamento($forma_pagamento);
+    //    $resultado = $ingressoDAO->get_byFormaPagamento($forma_pagamento);
     //
     //   print_r($resultado);
     //}
@@ -77,8 +77,8 @@ class IngressoController {
         $status = $_POST['status'];
 
         $novoIngresso = new Ingresso();
-        $novoIngresso->setPreco($preco);
-        $novoIngresso->setStatus($status);
+        $novoIngresso->set_preco($preco);
+        $novoIngresso->set_status($status);
 
         $resultado = $ingressoDAO->create($novoIngresso);
 
@@ -96,8 +96,8 @@ class IngressoController {
         $preco = (float)$_POST['preco'];
 
         $updateIngresso = new Ingresso();
-        $updateIngresso->setId($id);
-        $updateIngresso->setPreco($preco);
+        $updateIngresso->set_id($id);
+        $updateIngresso->set_preco($preco);
 
         $resultado = $ingressoDAO->update($updateIngresso);
     }
@@ -113,7 +113,7 @@ class IngressoController {
         $id = (int)$_POST['id'];
 
         $deleteIngresso = new Ingresso();
-        $deleteIngresso->setId($id);
+        $deleteIngresso->set_id($id);
 
         $resultado = $ingressoDAO->delete($deleteIngresso);
 

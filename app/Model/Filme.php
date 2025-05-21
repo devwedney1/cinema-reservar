@@ -69,7 +69,7 @@ class Filme
     /**
      * @return int
      */
-    public function getId(): int
+    public function get_id(): int
     {
         return $this->id;
     }
@@ -79,7 +79,7 @@ class Filme
      *
      * @return void
      */
-    public function setId(int $id): void
+    public function set_id(int $id): void
     {
         $this->id = $id;
     }
@@ -87,7 +87,7 @@ class Filme
     /**
      * @return string
      */
-    public function getNomeFilme(): string
+    public function get_nomeFilme(): string
     {
         return $this->nomeFilme;
     }
@@ -97,7 +97,7 @@ class Filme
      *
      * @return void
      */
-    public function setNomeFilme(string $nome): void
+    public function set_nomeFilme(string $nome): void
     {
         $this->nomeFilme = $nome;
     }
@@ -105,7 +105,7 @@ class Filme
     /**
      * @return string
      */
-    public function getDescricaoFilme(): string
+    public function get_descricaoFilme(): string
     {
         return $this->descricaoFilme;
     }
@@ -115,7 +115,7 @@ class Filme
      *
      * @return void
      */
-    public function setDescricaoFilme(string $descricao): void
+    public function set_descricaoFilme(string $descricao): void
     {
         $this->descricaoFilme = $descricao;
     }
@@ -123,7 +123,7 @@ class Filme
     /**
      * @return string
      */
-    public function getDuracaoFilme(): string
+    public function get_duracaoFilme(): string
     {
         return $this->duracaoFilme;
     }
@@ -133,7 +133,7 @@ class Filme
      *
      * @return void
      */
-    public function setDuracaoFilme(string $duracao): void
+    public function set_duracaoFilme(string $duracao): void
     {
         $this->duracaoFilme = $duracao;
     }
@@ -141,17 +141,17 @@ class Filme
     /**
      * @return string
      */
-    public function getCategoriaFilme(): string
+    public function get_categoriaFilme(): string
     {
-        return $this->categoriaFilme->getNomeCategoria();
+        return $this->categoriaFilme->get_nomeCategoria();
     }
 
     /**
      * @return int
      */
-    public function getCategoriaFilmeId(): int
+    public function get_categoriaFilmeId(): int
     {
-        return $this->categoriaFilme->getId();
+        return $this->categoriaFilme->get_id();
     }
 
     /**
@@ -159,7 +159,7 @@ class Filme
      *
      * @return void
      */
-    public function setCategoriaFilmeId(int $categoriaId): void
+    public function set_categoriaFilmeId(int $categoriaId): void
     {
         $this->categoriaFilmeId = $categoriaId;
     }
@@ -167,7 +167,7 @@ class Filme
     /**
      * @return string|null
      */
-    public function getCreatedAt(): ?string
+    public function get_createdAt(): ?string
     {
         return $this->created_at;
     }
@@ -177,7 +177,7 @@ class Filme
      *
      * @return void
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function set_createdAt(?string $createdAt): void
     {
         $this->created_at = $createdAt;
     }
@@ -185,7 +185,7 @@ class Filme
     /**
      * @return string|null
      */
-    public function getUpdatedAt(): ?string
+    public function get_updatedAt(): ?string
     {
         return $this->updated_at;
     }
@@ -195,7 +195,7 @@ class Filme
      *
      * @return void
      */
-    public function setUpdatedAt(?string $updatedAt): void
+    public function set_updatedAt(?string $updatedAt): void
     {
         $this->updated_at = $updatedAt;
     }
@@ -203,7 +203,7 @@ class Filme
     /**
      * @return string|null
      */
-    public function getDeletedAt(): ?string
+    public function get_deletedAt(): ?string
     {
         return $this->deleted_at;
     }
@@ -213,7 +213,7 @@ class Filme
      *
      * @return void
      */
-    public function setDeletedAt(?string $deletedAt): void
+    public function set_deletedAt(?string $deletedAt): void
     {
         $this->deleted_at = $deletedAt;
     }

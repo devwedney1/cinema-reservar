@@ -18,7 +18,7 @@ class Forma_pagamento {
     /**
      * @return int
      */
-    public function getId(): int
+    public function get_id(): int
     {
         return $this->id;
     }
@@ -28,7 +28,7 @@ class Forma_pagamento {
      *
      * @return void
      */
-    public function setId(int $id): void
+    public function set_id(int $id): void
     {
         $this->id = $id;
     }
@@ -36,7 +36,7 @@ class Forma_pagamento {
     /**
      * @return string
      */
-    public function getPagamento(): string
+    public function get_pagamento(): string
     {
         return $this->pagamento;
     }
@@ -46,29 +46,29 @@ class Forma_pagamento {
      *
      * @return void
      */
-    public function setPagamento(string $pagamento): void
+    public function set_pagamento(string $pagamento): void
     {
         $this->pagamento = $pagamento;
     }
 
-//    public function getCreated_at(): DateTime {
+//    public function get_created_at(): DateTime {
 //        return $this->created_at;
 //    }
-//    public function setCreated_at(DateTime $created_at): void {
+//    public function set_created_at(DateTime $created_at): void {
 //        $this->created_at = $created_at;
 //    }
 //
-//    public function getUpdated_at(): DateTime {
+//    public function get_updated_at(): DateTime {
 //        return $this->updated_at;
 //    }
-//    public function setUpdated_at(DateTime $updated_at): void {
+//    public function set_updated_at(DateTime $updated_at): void {
 //        $this->updated_at = $updated_at;
 //    }
 //
-//    public function getDeleted_at(): DateTime {
+//    public function get_deleted_at(): DateTime {
 //        return $this->deleted_at;
 //    }
-//    public function setDeleted_at(DateTime $deleted_at) {
+//    public function set_deleted_at(DateTime $deleted_at) {
 //        $this->deleted_at = $deleted_at;
 //    }
 }

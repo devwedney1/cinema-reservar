@@ -1,10 +1,11 @@
 <?php
-require_once '../../autoload.php';
 
-use App\DAO\CadeiraDAO;
+require_once __DIR__ . '/../Controller/CadeiraController.php';
+require_once __DIR__ . '/../Dao/CadeiraDAO.php';
 
-$cadeiraDAO = new CadeiraDAO();
-$cadeiras = $cadeiraDAO->listar();
+$dao = new CadeiraDAO();
+$cadeiras = $dao->get();
+
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +26,10 @@ $cadeiras = $cadeiraDAO->listar();
       <th>Número</th>
       <th>Ações</th>
     </tr>
+
     <?php foreach ($cadeiras as $cadeira): ?>
       <tr>
-        <td><?= $cadeira['id'] ?></td>
+        <td><?= htmlspecialchars($cadeira['id']) ?></td>
         <td><?= htmlspecialchars($cadeira['sala_nome']) ?></td>
         <td><?= htmlspecialchars($cadeira['numero']) ?></td>
         <td>
@@ -36,6 +38,7 @@ $cadeiras = $cadeiraDAO->listar();
         </td>
       </tr>
     <?php endforeach; ?>
+
   </table>
 
   <br>

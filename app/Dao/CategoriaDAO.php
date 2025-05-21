@@ -7,7 +7,7 @@ Class CategoriaDAO
 
     public function __construct()
     {
-        $this->conexao = DataConnection::getConnection();
+        $this->conexao = DataConnection::get_connection();
     }
 
     /**

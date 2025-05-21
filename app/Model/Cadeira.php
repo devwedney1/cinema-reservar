@@ -1,96 +1,40 @@
 <?php
 
-require_once 'Sala.php';
+require_once __DIR__ . '/Sala.php';
 
-class Cadeira {
-    /**
-     * @var int
-     */
+class Cadeira
+{
     private int $id;
-    /**
-     * @var Sala
-     */
     private Sala $sala;
-    /**
-     * @var int
-     */
-    private int $numeroCadeira;
+    private int $numero_cadeira;
 
-    public function __construct(int $id, Sala $sala, int $numeroCadeira) {
-        $this->id = $id;
-        $this->sala = $sala;
-        $this->numeroCadeira = $numeroCadeira;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int {
+    public function get_id(): int
+    {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return void
-     */
-    public function setId(int $id): void {
+    public function set_id(int $id): void
+    {
         $this->id = $id;
     }
 
-//    /**
-//     * @return int
-//     */
-//    public function getSalaId(): int
-//    {
-//        return $this->salaId;
-//    }
-//
-//    /**
-//     * @param Sala $salaId
-//     *
-//     * @return void
-//     */
-//    public function setSalaId(Sala $salaId): void {
-//        $this->salaId = $salaId;
-//    }
-
-    /**
-     * @return int
-     */
-    public function getNumeroCadeira(): int
+    public function get_sala(): Sala
     {
-        return $this->numeroCadeira;
+        return $this->sala;
     }
 
-    /**
-     * @param int $numeroCadeira
-     *
-     * @return void
-     */
-    public function setNumeroCadeira(int $numeroCadeira): void
+    public function set_sala(Sala $sala): void
     {
-        $this->numeroCadeira = $numeroCadeira;
+        $this->sala = $sala;
     }
 
-//    public function getCreated_at(): DateTime {
-//        return $this->created_at;
-//    }
-//    public function setCreated_at(DateTime $created_at): void {
-//        $this->created_at = $created_at;
-//    }
-//
-//    public function getUpdated_at(): DateTime {
-//        return $this->updated_at;
-//    }
-//    public function setUpdated_at(DateTime $updated_at): void {
-//        $this->updated_at = $updated_at;
-//    }
-//
-//    public function getDeleted_at(): DateTime {
-//        return $this->deleted_at;
-//    }
-//    public function setDeleted_at(DateTime $deleted_at): void {
-//        $this->deleted_at = $deleted_at;
-//    }
+    public function get_numeroCadeira(): int
+    {
+        return $this->numero_cadeira;
+    }
+
+    public function set_numeroCadeira(int $numero_cadeira): void
+    {
+        $this->numero_cadeira = $numero_cadeira;
+    }
 }

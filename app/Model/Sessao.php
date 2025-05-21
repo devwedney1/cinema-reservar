@@ -23,7 +23,7 @@ class Sessao {
     /**
      * @return int
      */
-    public function getId(): int {
+    public function get_id(): int {
         return $this->id;
     }
 
@@ -32,43 +32,43 @@ class Sessao {
      *
      * @return void
      */
-    public function setId(int $id): void
+    public function set_id(int $id): void
     {
         $this->id = $id;
     }
 //
-//    public function getFilme_id(): Filme {
+//    public function get_filme_id(): Filme {
 //        return $this->filme_id;
 //    }
-//    public function setFilme_id(Filme $filme_id): void {
+//    public function set_filme_id(Filme $filme_id): void {
 //        $this->filme_id = $filme_id;
 //    }
 //
-//    public function getSala_id(): Sala {
+//    public function get_sala_id(): Sala {
 //        return $this->sala_id;
 //    }
-//    public function setSala_id(Sala $sala_id): void {
+//    public function set_sala_id(Sala $sala_id): void {
 //        $this->sala_id = $sala_id;
 //    }
 //
-//    public function getCreated_at(): DateTime {
+//    public function get_created_at(): DateTime {
 //        return $this->created_at;
 //    }
-//    public function setCreated_at(DateTime $created_at): void {
+//    public function set_created_at(DateTime $created_at): void {
 //        $this->created_at = $created_at;
 //    }
 //
-//    public function getUpdated_at(): DateTime {
+//    public function get_updated_at(): DateTime {
 //        return $this->updated_at;
 //    }
-//    public function setUpdated_at(DateTime $updated_at): void {
+//    public function set_updated_at(DateTime $updated_at): void {
 //        $this->updated_at = $updated_at;
 //    }
 //
-//    public function getDeleted_at(): DateTime {
+//    public function get_deleted_at(): DateTime {
 //        return $this->deleted_at;
 //    }
-//    public function setDeleted_at(DateTime $deleted_at): void {
+//    public function set_deleted_at(DateTime $deleted_at): void {
 //        $this->deleted_at = $deleted_at;
 //    }
 }

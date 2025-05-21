@@ -5,36 +5,38 @@ class DataConnection
     private static $instance;
 
     /**
-     * @return PDO|void
+     * Retorna a instância da conexão PDO com tratamento de erro.
+     * @return PDO|null
      */
-    public static function getConnection ()
+    public static function get_connection(): ?PDO
     {
         try {
             if (!isset(self::$instance)) {
-
-                $database = self::dataToConnection();
-                self::$instance = new PDO("mysql:host={$database['host']};dbname={$database['dbname']};charset=utf8", $database['user'], $database['password']);
-
-                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $config = self::loadDatabaseConfig();
+                self::$instance = new PDO(
+                    "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8",
+                    $config['user'],
+                    $config['password']
+                ); self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+               
             }
-
             return self::$instance;
         } catch (PDOException $e) {
-            echo "Erro na conexão: {$e->getMessage()}";
+            error_log("Erro de conexão com o banco: " . $e->get_message());
+            return null;
         }
     }
 
     /**
-     * @return array|void
+     * Carrega as credenciais do banco de dados a partir do arquivo de configuração.
+     * @return array
      */
-    private static function dataToConnection ()
+    private static function loadDatabaseConfig(): array
     {
-        try {
-
-            return require __DIR__ . '/../Config/database.php';
-
-        } catch (Exception $e) {
-            echo " Erro no carregamento do dados para conexão do banco de dados: {$e->getMessage()}";
+        $configPath = __DIR__ . '/../Config/database.php';
+        if (!file_exists($configPath)) {
+            throw new Exception("Arquivo de configuração do banco não encontrado.");
         }
+        return require $configPath;
     }
 }

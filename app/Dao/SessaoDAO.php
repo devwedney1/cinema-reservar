@@ -7,7 +7,7 @@ class SessaoDAO {
     private const tableName = 'sessoes_filmes';
 
     public function __construct() {
-        $this->conexao = DataConnection::getConnection();
+        $this->conexao = DataConnection::get_connection();
     }
 
     public function get() {
@@ -17,35 +17,35 @@ class SessaoDAO {
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }   catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar as sessoes" . $e->getMessage());
+            throw new PDOException("ERRO ao buscar as sessoes" . $e->get_message());
         }
     }
 
-    public function getByFilmeId(Filme $filme) {
+    public function get_byFilmeId(Filme $filme) {
         try {
             $stmt = $this->conexao->prepare("SELECT * FROM " . self::tableName . " WHERE filme_id = :filme_id");
 
-            $filme_id = $filme->getId();
+            $filme_id = $filme->get_id();
             $stmt->bindParam(':filme_id', $filme_id, PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar sessões por filme: " . $e->getMessage());
+            throw new PDOException("ERRO ao buscar sessões por filme: " . $e->get_message());
         }
     }
 
-    public function getBySalaId(Sala $sala) {
+    public function get_bySalaId(Sala $sala) {
         try {
             $stmt = $this->conexao->prepare("SELECT * FROM " . self::tableName . " WHERE sala_id = :sala_id");
 
-            $sala_id = $sala->getId();
+            $sala_id = $sala->get_id();
             $stmt->bindParam(':sala_id', $sala_id, PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new PDOException("ERRO ao buscar sessões por sala: " . $e->getMessage());
+            throw new PDOException("ERRO ao buscar sessões por sala: " . $e->get_message());
         }
     }
 
@@ -54,8 +54,8 @@ class SessaoDAO {
             $this->conexao->beginTransaction();
 
             $dataFormularioSessao = [
-                'filme_id' => $sessao->getFilme_id(),
-                'sala_id' => $sessao->getSala_id(),
+                'filme_id' => $sessao->get_filme_id(),
+                'sala_id' => $sessao->get_sala_id(),
             ];
 
             $stmt = $this->conexao->prepare(
@@ -79,7 +79,7 @@ class SessaoDAO {
 
         } catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao criar uma sessão: " . $e->getMessage());
+            throw new PDOException("ERRO ao criar uma sessão: " . $e->get_message());
         }
     }
 
@@ -88,7 +88,7 @@ class SessaoDAO {
         try {
             $this->conexao->beginTransaction();
 
-            if ($sessao->getId() == 0 || $sessao->getId() == '' || $sessao->getId() == ' ' || !$sessao->getId()) {
+            if ($sessao->get_id() == 0 || $sessao->get_id() == '' || $sessao->get_id() == ' ' || !$sessao->get_id()) {
                 return [
                     'success' => false,
                     'message' => 'O id é obrigatorio para atualizar uma sessão',
@@ -96,9 +96,9 @@ class SessaoDAO {
             }
 
             $dataFormularioUpdate = [
-                'id' => $sessao->getId(),
-                'filme_id' => $sessao->getFilme_id(),
-                'sala_id' => $sessao->getSala_id(),
+                'id' => $sessao->get_id(),
+                'filme_id' => $sessao->get_filme_id(),
+                'sala_id' => $sessao->get_sala_id(),
             ];
 
             $stmt = $this->conexao->prepare(
@@ -120,7 +120,7 @@ class SessaoDAO {
             }
         }  catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao atualizar a sessão: " . $e->getMessage());
+            throw new PDOException("ERRO ao atualizar a sessão: " . $e->get_message());
         }
     }
 
@@ -128,7 +128,7 @@ class SessaoDAO {
         try {
             $this->conexao->beginTransaction();
             
-            if ($sessao->getId() == 0 || $sessao->getId() == '' || $sessao->getId() == ' ' || !$sessao->getId()) {
+            if ($sessao->get_id() == 0 || $sessao->get_id() == '' || $sessao->get_id() == ' ' || !$sessao->get_id()) {
                 return [
                     'success' => false,
                     'message' => 'O id é obrigatório para deletar uma sessão',
@@ -136,7 +136,7 @@ class SessaoDAO {
             }
 
             $dataFormularioDelete = [
-                'id' => $sessao->getId(),
+                'id' => $sessao->get_id(),
             ];
 
             $stmt = $this->conexao->prepare(
@@ -156,7 +156,7 @@ class SessaoDAO {
             }
         } catch (PDOException $e) {
             $this->conexao->rollBack();
-            throw new PDOException("ERRO ao deletar a sessão " . $e->getMessage());
+            throw new PDOException("ERRO ao deletar a sessão " . $e->get_message());
         }
     }
 }

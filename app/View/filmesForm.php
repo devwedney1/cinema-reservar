@@ -90,23 +90,23 @@ if (isset($_GET['id']) && isset($_GET['categoria_id'])) {
 
 <?php if ($filmeSelecionadoAtualizacao): ?>
     <form method="post" action="filmesForm.php">
-        <input type="hidden" name="id" value="<?= $filmeSelecionadoAtualizacao->getId() ?>"/>
+        <input type="hidden" name="id" value="<?= $filmeSelecionadoAtualizacao->get_id() ?>"/>
 
         <label>Nome do Filme</label>
-        <input type="text" name="nomeFilme" value="<?= htmlspecialchars($filmeSelecionadoAtualizacao->getNomeFilme()) ?>"/>
+        <input type="text" name="nomeFilme" value="<?= htmlspecialchars($filmeSelecionadoAtualizacao->get_nomeFilme()) ?>"/>
 
         <label>Descrição</label>
-        <input type="text" name="descricaoFilme" value="<?= htmlspecialchars($filmeSelecionadoAtualizacao->getDescricaoFilme()) ?>"/>
+        <input type="text" name="descricaoFilme" value="<?= htmlspecialchars($filmeSelecionadoAtualizacao->get_descricaoFilme()) ?>"/>
 
         <label>Duração</label>
-        <input type="time" name="duracaoFilme" value="<?= htmlspecialchars($filmeSelecionadoAtualizacao->getDuracaoFilme()) ?>"/>
+        <input type="time" name="duracaoFilme" value="<?= htmlspecialchars($filmeSelecionadoAtualizacao->get_duracaoFilme()) ?>"/>
 
         <label>Categoria</label>
         <select name="categoriaFilmeId">
             <?php foreach ($categoriaFilmes as $categoriaFilme): ?>
-                <option value="<?= $categoriaFilme->getId() ?>"
-                    <?= $categoriaFilme->getId() == $filmeSelecionadoAtualizacao->getCategoriaFilmeId() ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($categoriaFilme->getNomeCategoria()) ?>
+                <option value="<?= $categoriaFilme->get_id() ?>"
+                    <?= $categoriaFilme->get_id() == $filmeSelecionadoAtualizacao->get_categoriaFilmeId() ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($categoriaFilme->get_nomeCategoria()) ?>
                 </option>
             <?php endforeach; ?>
         </select>
