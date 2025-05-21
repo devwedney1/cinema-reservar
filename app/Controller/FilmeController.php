@@ -1,6 +1,7 @@
 <?php
 require_once '../Dao/FilmeDAO.php';
 require_once '../Model/Filme.php';
+require_once '../Model/CategoriaFilme.php';
 
 class FilmeController {
 
@@ -15,14 +16,26 @@ class FilmeController {
     protected Filme $filme;
 
     /**
-     * @param FilmeDAO $filmeDAO
-     * @param Filme    $filme
+     * @var CategoriaFilme
      */
-    public function __construct(FilmeDAO $filmeDAO, Filme $filme) {
+    protected CategoriaFilme $categoriaFilme;
+
+
+    /**
+     * @param FilmeDAO       $filmeDAO
+     * @param Filme          $filme
+     * @param CategoriaFilme $categoriaFilme
+     */
+    public function __construct(FilmeDAO $filmeDAO, Filme $filme, CategoriaFilme $categoriaFilme) {
         $this->filmeDAO = $filmeDAO;
         $this->filme = $filme;
+        $this->categoriaFilme = $categoriaFilme;
     }
-    public function indexFilme()
+
+    /**
+     * @return array
+     */
+    public function indexFilme(): array
     {
         return $this->filmeDAO->get();
     }
