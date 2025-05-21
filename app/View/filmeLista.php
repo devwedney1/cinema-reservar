@@ -26,6 +26,8 @@ if (is_array($filmes) && count($filmes) > 0) {
         echo "<p>Duração: " . $filme->getDuracaoFilme() . "</p>";
         echo "<p>Categoria: " . $filme->getCategoriaFilme() . "</p>";
         echo "<hr>";
+        echo "<button href='../app/view/filmesForm.php'>Atualizar Filme</button>";
+
     }
     echo "</ul>";
 } else {
