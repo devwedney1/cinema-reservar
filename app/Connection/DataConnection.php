@@ -20,8 +20,6 @@ class DataConnection
 
             return self::$instance;
         } catch (PDOException $e) {
-
-            var_dump($database);
             echo "Erro na conexão: {$e->getMessage()}";
         }
     }
