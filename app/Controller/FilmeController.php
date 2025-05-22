@@ -1,4 +1,5 @@
 <?php
+
 require_once '../Dao/FilmeDAO.php';
 require_once '../Model/Filme.php';
 require_once '../Model/CategoriaFilme.php';
@@ -30,11 +31,17 @@ class FilmeController
      */
     public function createFilme(array $data): bool
     {
+        $categoriaFilme = new CategoriaFilme(
+            (int) $data['categoria_filme_id'],
+            '' // você pode buscar o nome da categoria aqui, se precisar
+        );
+
         $filme = new Filme(
+            null,
             $data['nome_filme'],
             $data['descricao_filme'],
             $data['duracao_filme'],
-            (int) $data['categoria_filme_id']
+            $categoriaFilme
         );
 
         return $this->filmeDAO->create($filme);
@@ -48,12 +55,17 @@ class FilmeController
      */
     public function updateFilme(array $data): bool
     {
+        $categoriaFilme = new CategoriaFilme(
+            (int) $data['categoria_filme_id'],
+            ''
+        );
+
         $filme = new Filme(
             (int) $data['id'],
             $data['nome_filme'],
             $data['descricao_filme'],
             $data['duracao_filme'],
-            (int) $data['categoria_filme_id']
+            $categoriaFilme
         );
 
         return $this->filmeDAO->update($filme);
@@ -67,7 +79,9 @@ class FilmeController
      */
     public function deleteFilme(int $id): bool
     {
-        return $this->filmeDAO->delete($id);
+        $filme = new Filme($id, '', '', '', new CategoriaFilme(null, ''));
+
+        return $this->filmeDAO->delete($filme);
     }
 
     /**
@@ -78,6 +92,6 @@ class FilmeController
      */
     public function forceDeleteFilme(int $id): bool
     {
-        return $this->filmeDAO->forceDelete($id);
+        return $this->filmeDAO->destroy($id);
     }
 }

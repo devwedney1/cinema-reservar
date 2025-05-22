@@ -26,6 +26,45 @@ $filmes = $filmes->indexFilme();
             background-color: #f7f7f7;
             color: #333;
         }
+
+        .cadastro-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f9f9f9;
+            padding: 15px 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        .cadastro-texto {
+            font-size: 16px;
+            color: #333;
+            margin-right: 20px;
+        }
+
+        .buttonCadastra {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .buttonCadastra a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .buttonCadastra:hover {
+            background-color: #218838;
+        }
+
         h1 {
             text-align: center;
             color: #222;
@@ -77,7 +116,17 @@ $filmes = $filmes->indexFilme();
 </head>
 <body>
 
+<div class="cadastro-container">
+    <div class="cadastro-texto">
+        Cadastre novos filmes para o catálogo do cinema.
+    </div>
+    <button class="buttonCadastra">
+        <a href="./filmeFormCreate.php">Cadastrar Filme</a>
+    </button>
+</div>
+
 <h1>Lista de Filmes</h1>
+
 
 <?php if (count($filmes) > 0): ?>
     <ul>
@@ -87,13 +136,14 @@ $filmes = $filmes->indexFilme();
                 <p><strong>Nome:</strong> <?= htmlspecialchars($filme->get_nomeFilme()) ?></p>
                 <p><strong>Descrição:</strong> <?= htmlspecialchars($filme->get_descricaoFilme()) ?></p>
                 <p><strong>Duração:</strong> <?= htmlspecialchars($filme->get_duracaoFilme()) ?></p>
-                <p><strong>Categoria:</strong> <?= htmlspecialchars($filme->get_categoriaFilme()) ?></p>
+                <p><strong>Categoria:</strong> <?= htmlspecialchars($filme->get_categoriaFilme()->get_nomeCategoria()) ?></p>
+
                 <hr>
                 <button class="buttonUpdate">
-                    <a href="../View/filmesForm.php?id=<?= $filme->get_id() ?>&categoria_id=<?= $filme->get_categoriaFilmeId() ?>">Atualizar Filme</a>
+                    <a href="../View/filmesForm.php?id=<?= $filme->get_id() ?>&categoria_id=<?= $filme->get_categoriaFilmeId()->get_id() ?>">Atualizar Filme</a>
                 </button>
                 <button class="buttonDelete">
-                    <a href="../Controller/FilmeController.php?id=<?= $filme->get_id() ?>&categoria_id=<?= $filme->get_categoriaFilmeId() ?>">Excluir Filme</a>
+                    <a href="../Controller/FilmeController.php?id=<?= $filme->get_id() ?>&categoria_id=<?= $filme->get_categoriaFilmeId()->get_id() ?>">Excluir Filme</a>
                 </button>
             </li>
         <?php endforeach; ?>
